@@ -1,0 +1,63 @@
+Tỉnh Phú Thọ,25
+Tỉnh Quảng Ngãi,51
+Tỉnh Tây Ninh,72
+Tỉnh Hoà Bình,17
+Tỉnh Quảng Trị,45
+Tỉnh Đắk Nông,67
+Tỉnh An Giang,89
+Tỉnh Kiên Giang,91
+Tỉnh Hà Nam,35
+Tỉnh Thừa Thiên Huế,46
+Tỉnh Hậu Giang,93
+Tỉnh Hải Dương,30
+Tỉnh Khánh Hòa,56
+Tỉnh Bình Dương,74
+Tỉnh Gia Lai,64
+Tỉnh Hà Giang,02
+Thành phố Hải Phòng,31
+Thành phố Đà Nẵng,48
+Tỉnh Bình Định,52
+Tỉnh Bà Rịa - Vũng Tàu,77
+Tỉnh Bạc Liêu,95
+Tỉnh Cao Bằng,04
+Tỉnh Điện Biên,11
+Tỉnh Yên Bái,15
+Tỉnh Bắc Ninh,27
+Tỉnh Hưng Yên,33
+Tỉnh Bắc Kạn,06
+Tỉnh Đồng Tháp,87
+Tỉnh Tuyên Quang,08
+Tỉnh Lào Cai,10
+Tỉnh Lai Châu,12
+Tỉnh Quảng Ninh,22
+Tỉnh Hà Tĩnh,42
+Tỉnh Kon Tum,62
+Thành phố Hồ Chí Minh,79
+Tỉnh Tiền Giang,82
+Tỉnh Sơn La,14
+Tỉnh Bình Phước,70
+Thành phố Cần Thơ,92
+Tỉnh Bắc Giang,24
+Tỉnh Ninh Bình,37
+Tỉnh Đắk Lắk,66
+Tỉnh Lâm Đồng,68
+Tỉnh Thái Bình,34
+Tỉnh Nghệ An,40
+Tỉnh Phú Yên,54
+Tỉnh Đồng Nai,75
+Tỉnh Trà Vinh,84
+Tỉnh Cà Mau,96
+Tỉnh Nam Định,36
+Tỉnh Bình Thuận,60
+Tỉnh Vĩnh Long,86
+Tỉnh Sóc Trăng,94
+Thành phố Hà Nội,01
+Tỉnh Vĩnh Phúc,26
+Tỉnh Quảng Bình,44
+Tỉnh Quảng Nam,49
+Tỉnh Long An,80
+Tỉnh Bến Tre,83
+Tỉnh Thái Nguyên,19
+Tỉnh Lạng Sơn,20
+Tỉnh Thanh Hóa,38
+Tỉnh Ninh Thuận,58
