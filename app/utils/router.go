@@ -12,7 +12,7 @@ type Router struct {
 	mux map[string]Handle
 }
 
-func newRouter() *Router {
+func NewRouter() *Router {
 	return &Router{
 		mux: make(map[string]Handle),
 	}
