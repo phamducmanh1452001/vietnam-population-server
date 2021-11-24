@@ -9,7 +9,7 @@ func main() {
 	app := &app.App{}
 	app.Init()
 
-	port := os.Getenv("$PORT")
+	port := os.Getenv("PORT")
 	if len(port) < 1 {
 		port = "80"
 	}
