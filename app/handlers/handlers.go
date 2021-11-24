@@ -1,17 +1,18 @@
 package handlers
 
 import (
+	"database/sql"
 	"log"
 	"net/http"
-	subDivs "vietnam-population-server/app/models/subdivisions"
+	"vietnam-population-server/app/utils"
 )
 
-func GetProvinceList(w http.ResponseWriter, r *http.Request) {
-	provinceList := subDivs.GetProvinceList()
+func GetProvinceList(db *sql.DB, w http.ResponseWriter, r *http.Request) {
+	provinceList := utils.GetProvinceList(db)
 	respondJSON(w, http.StatusOK, provinceList)
 }
 
-func GetDistrictListByProvinceCode(w http.ResponseWriter, r *http.Request) {
+func GetDistrictListByProvinceCode(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	keys, ok := r.URL.Query()["province_code"]
 
 	if !ok || len(keys[0]) < 1 {
@@ -22,11 +23,11 @@ func GetDistrictListByProvinceCode(w http.ResponseWriter, r *http.Request) {
 	key := keys[0]
 
 	log.Println("Url Param 'key' is: " + string(key))
-	districtList := subDivs.GetDistrictListByProvinceCode(key)
+	districtList := utils.GetDistrictListByProvinceCode(db, key)
 	respondJSON(w, http.StatusOK, districtList)
 }
 
-func GetWardListByDistrictCode(w http.ResponseWriter, r *http.Request) {
+func GetWardListByDistrictCode(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	keys, ok := r.URL.Query()["district_code"]
 
 	if !ok || len(keys[0]) < 1 {
@@ -37,6 +38,6 @@ func GetWardListByDistrictCode(w http.ResponseWriter, r *http.Request) {
 	key := keys[0]
 
 	log.Println("Url Param 'key' is: " + string(key))
-	wardList := subDivs.GetWardListByDistrictCode(key)
+	wardList := utils.GetWardListByDistrictCode(db, key)
 	respondJSON(w, http.StatusOK, wardList)
 }
