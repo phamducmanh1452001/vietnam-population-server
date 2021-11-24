@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -8,7 +9,6 @@ import (
 	"vietnam-population-server/app/utils"
 )
 
-// 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
 type App struct {
 	Router *utils.Router
 	server *http.Server
@@ -32,7 +32,12 @@ func (a *App) Run(host string) {
 }
 
 func (a *App) setRouters() {
+	a.Router.Add("/", homePage)
 	a.Router.Add("/provinces", handlers.GetProvinceList)
 	a.Router.Add("/districts", handlers.GetDistrictListByProvinceCode)
 	a.Router.Add("/wards", handlers.GetWardListByDistrictCode)
+}
+
+func homePage(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Home Page")
 }
