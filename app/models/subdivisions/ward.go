@@ -1,7 +1,9 @@
 package models
 
 type Ward struct {
-	Name         string `json:"name"`
-	Code         string `json:"code"`
-	DistrictCode string `json:"district_code"`
+	Name       string           `json:"name"`
+	Code       string           `json:"code"`
+	SuperCode  string           `json:"super_code"`
+	Population uint32           `json:"population"`
+	Level      SubdivisionLevel `json:"level"`
 }

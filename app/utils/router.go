@@ -24,11 +24,13 @@ func (router *Router) Add(path string, handle Handle) {
 
 func GetHeader(url string) string {
 	sl := strings.Split(url, "/")
-	return fmt.Sprintf("/%s", sl[1])
+	head := strings.Join(sl[1:], "/")
+	return fmt.Sprintf("/%s", head)
 }
 
 func (router *Router) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	head := GetHeader(r.URL.Path)
+
 	handle, ok := router.mux[head]
 	if ok {
 		handle(w, r)
