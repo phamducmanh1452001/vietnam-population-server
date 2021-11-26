@@ -14,7 +14,7 @@ import (
 
 type Handle func(db *sql.DB, w http.ResponseWriter, r *http.Request)
 
-var sqlUrl = "root:root@tcp(localhost:3306)/vietnam_population" //"wxKmYNfzWA:uiQirhBvwE@tcp(remotemysql.com:3306)/wxKmYNfzWA"
+var sqlUrl = "wxKmYNfzWA:2oVGW6sXGC@tcp(remotemysql.com:3306)/wxKmYNfzWA" //"root:root@tcp(localhost:3306)/vietnam_population" //
 
 type App struct {
 	Router *utils.Router

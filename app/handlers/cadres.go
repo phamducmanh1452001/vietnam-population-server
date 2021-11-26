@@ -3,6 +3,8 @@ package handlers
 import (
 	"database/sql"
 	"fmt"
+	"log"
+	"math"
 	"net/http"
 	"sync"
 	"vietnam-population-server/app/utils"
@@ -34,17 +36,16 @@ func GetLowerCadreListByCode(db *sql.DB, w http.ResponseWriter, r *http.Request)
 		}
 		population = uint32(v1)
 		area = v2
-		len := len(districtList)
+		length := len(districtList)
 
 		wg := sync.WaitGroup{}
-		for i := 0; i < len; i++ {
+		for i := 0; i < int(math.Min(float64(length), 5)); i++ {
 			wg.Add(1)
 			go func(i int) {
 				subdivision = districtList[i]
 				cadre, err := utils.GetCadreByCode(db, districtList[i].Code)
 				if err != nil {
 					respondError(w, notImplementedStatus.number, err.Error())
-					wg.Done()
 				} else {
 					cadreResponse := CadreResponse{
 						Name:        cadre.Name.String,
@@ -61,16 +62,18 @@ func GetLowerCadreListByCode(db *sql.DB, w http.ResponseWriter, r *http.Request)
 			}(i)
 		}
 		wg.Wait()
+		log.Println(cadreResponseArray)
+
 	case districtCodeLen:
 		wardList, v1, v2 := utils.GetWardListByDistrictCode(db, code)
 		if v1 == utils.ErrorFlag {
 			respondError(w, internalErrorStatus.number, v2)
 		}
 		population = uint32(v1)
-		len := len(wardList)
+		length := len(wardList)
 
 		wg := sync.WaitGroup{}
-		for i := 0; i < len; i++ {
+		for i := 0; i < int(math.Min(float64(length), 5)); i++ {
 			wg.Add(1)
 			go func(i int) {
 				subdivision = wardList[i]
@@ -92,6 +95,8 @@ func GetLowerCadreListByCode(db *sql.DB, w http.ResponseWriter, r *http.Request)
 				wg.Done()
 			}(i)
 		}
+		wg.Wait()
+		log.Println(cadreResponseArray)
 	}
 
 	cadreListResponse = CadreListResponse{
