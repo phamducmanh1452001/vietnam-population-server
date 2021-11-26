@@ -21,9 +21,10 @@ func GetCadreByCodeAndPassword(db *sql.DB, code string, password string) (cadre.
 	log.Println(query)
 	results, err := db.Query(query)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println("Error: ", err.Error())
 		return cadre, err
 	}
+
 	if results.Next() {
 		err := results.Scan(&cadre.Code, &cadre.Name, &cadre.Password, &cadre.Age, &cadre.Phone, &cadre.Email)
 		if err != nil {
@@ -46,7 +47,7 @@ func GetCadreByCode(db *sql.DB, code string) (cadre.Cadre, error) {
 	log.Println(query)
 	results, err := db.Query(query)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println("Error: ", err.Error())
 		return cadre, err
 	}
 

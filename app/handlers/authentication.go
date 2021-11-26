@@ -14,6 +14,11 @@ func Login(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 
 	code := r.PostForm.Get("code")
 	password := r.PostForm.Get("password")
+	if code == "" || password == "" {
+		respondError(w, badRequestStatus.number, badRequestStatus.description)
+		return
+	}
+
 	cadre, err := utils.GetCadreByCodeAndPassword(db, code, password)
 	if err != nil {
 		respondError(w, notFoundStatus.number, err.Error())

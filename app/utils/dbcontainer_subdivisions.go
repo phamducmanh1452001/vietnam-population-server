@@ -24,7 +24,7 @@ func GetProvinceList(db *sql.DB) ([]subDivs.Province, uint32) {
 	log.Println(query)
 	results, err := db.Query(query)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println("Error28: ", err.Error())
 		return provinceList, ErrorFlag
 	}
 
@@ -32,13 +32,12 @@ func GetProvinceList(db *sql.DB) ([]subDivs.Province, uint32) {
 	for results.Next() {
 		err = results.Scan(&province.Code, &province.Name, &province.Population)
 		if err != nil {
-			log.Println(err.Error())
-			return provinceList, ErrorFlag
+			log.Println("Error39: ", err.Error())
+		} else {
+			population += province.Population
+			province.Level = getLevelFromSubdivisionName(province.Name)
+			provinceList = append(provinceList, province)
 		}
-
-		population += province.Population
-		province.Level = getLevelFromSubdivisionName(province.Name)
-		provinceList = append(provinceList, province)
 	}
 
 	return provinceList, population
@@ -56,20 +55,20 @@ func GetDistrictListByProvinceCode(db *sql.DB, provinceCode string) ([]subDivs.D
 	log.Println(query)
 	results, err := db.Query(query)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println("Error: ", err.Error())
 		return districtList, ErrorFlag, queryError
 	}
 	var district subDivs.District
+
 	for results.Next() {
 		err = results.Scan(&district.Code, &district.Name, &district.SuperCode, &district.Population)
 		if err != nil {
-			log.Println(err.Error())
-			return districtList, ErrorFlag, queryError
+			log.Println("Error: ", err.Error())
+		} else {
+			population += district.Population
+			district.Level = getLevelFromSubdivisionName(district.Name)
+			districtList = append(districtList, district)
 		}
-
-		population += district.Population
-		district.Level = getLevelFromSubdivisionName(district.Name)
-		districtList = append(districtList, district)
 	}
 
 	table = "provinces"
@@ -78,7 +77,7 @@ func GetDistrictListByProvinceCode(db *sql.DB, provinceCode string) ([]subDivs.D
 	query = fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)
 	results, err = db.Query(query)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println("Error: ", err.Error())
 		return districtList, ErrorFlag, ""
 	}
 
@@ -105,7 +104,7 @@ func GetWardListByDistrictCode(db *sql.DB, districtCode string) ([]subDivs.Ward,
 	log.Println(query)
 	results, err := db.Query(query)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println("Error: ", err.Error())
 		return wardList, ErrorFlag, queryError
 	}
 
@@ -113,13 +112,12 @@ func GetWardListByDistrictCode(db *sql.DB, districtCode string) ([]subDivs.Ward,
 	for results.Next() {
 		err = results.Scan(&ward.Code, &ward.Name, &ward.SuperCode, &ward.Population)
 		if err != nil {
-			log.Println(err.Error())
-			return wardList, ErrorFlag, queryError
+			log.Println("Error: ", err.Error())
+		} else {
+			population += ward.Population
+			ward.Level = getLevelFromSubdivisionName(ward.Name)
+			wardList = append(wardList, ward)
 		}
-
-		population += ward.Population
-		ward.Level = getLevelFromSubdivisionName(ward.Name)
-		wardList = append(wardList, ward)
 	}
 
 	table = "districts"
@@ -128,7 +126,7 @@ func GetWardListByDistrictCode(db *sql.DB, districtCode string) ([]subDivs.Ward,
 	query = fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)
 	results, err = db.Query(query)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println("Error: ", err.Error())
 		return wardList, ErrorFlag, queryError
 	}
 	var area string
@@ -159,7 +157,7 @@ func GetProvinceByCode(db *sql.DB, code string) (subDivs.Province, error) {
 	if results.Next() {
 		err = results.Scan(&province.Code, &province.Name, &province.Population)
 		if err != nil {
-			log.Println(err.Error())
+			log.Println("Error: ", err.Error())
 			return province, err
 		}
 
@@ -186,7 +184,7 @@ func GetDistrictByCode(db *sql.DB, code string) (subDivs.District, error) {
 	if results.Next() {
 		err = results.Scan(&district.Code, &district.Name, &district.Population, &district.SuperCode)
 		if err != nil {
-			log.Println(err.Error())
+			log.Println("Error: ", err.Error())
 			return district, err
 		}
 
@@ -213,7 +211,7 @@ func GetWardByCode(db *sql.DB, code string) (subDivs.Ward, error) {
 	if results.Next() {
 		err = results.Scan(&ward.Code, &ward.Name, &ward.Population, &ward.SuperCode)
 		if err != nil {
-			log.Println(err.Error())
+			log.Println("Error: ", err.Error())
 			return ward, err
 		}
 

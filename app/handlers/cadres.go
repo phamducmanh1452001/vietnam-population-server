@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"sync"
 	"vietnam-population-server/app/utils"
 )
 
@@ -35,24 +36,31 @@ func GetLowerCadreListByCode(db *sql.DB, w http.ResponseWriter, r *http.Request)
 		area = v2
 		len := len(districtList)
 
+		wg := sync.WaitGroup{}
 		for i := 0; i < len; i++ {
-			subdivision = districtList[i]
-			cadre, err := utils.GetCadreByCode(db, districtList[i].Code)
-			if err != nil {
-				respondError(w, notImplementedStatus.number, err.Error())
-				return
-			}
-			cadreResponse := CadreResponse{
-				Name:        cadre.Name.String,
-				Code:        cadre.Code,
-				Age:         uint8(cadre.Age.Int16),
-				Phone:       cadre.Phone.String,
-				Email:       cadre.Email.String,
-				Permission:  uint8(cadre.Permission),
-				Subdivision: subdivision,
-			}
-			cadreResponseArray = append(cadreResponseArray, cadreResponse)
+			wg.Add(1)
+			go func(i int) {
+				subdivision = districtList[i]
+				cadre, err := utils.GetCadreByCode(db, districtList[i].Code)
+				if err != nil {
+					respondError(w, notImplementedStatus.number, err.Error())
+					wg.Done()
+				} else {
+					cadreResponse := CadreResponse{
+						Name:        cadre.Name.String,
+						Code:        cadre.Code,
+						Age:         uint8(cadre.Age.Int16),
+						Phone:       cadre.Phone.String,
+						Email:       cadre.Email.String,
+						Permission:  uint8(cadre.Permission),
+						Subdivision: subdivision,
+					}
+					cadreResponseArray = append(cadreResponseArray, cadreResponse)
+				}
+				wg.Done()
+			}(i)
 		}
+		wg.Wait()
 	case districtCodeLen:
 		wardList, v1, v2 := utils.GetWardListByDistrictCode(db, code)
 		if v1 == utils.ErrorFlag {
@@ -61,23 +69,28 @@ func GetLowerCadreListByCode(db *sql.DB, w http.ResponseWriter, r *http.Request)
 		population = uint32(v1)
 		len := len(wardList)
 
+		wg := sync.WaitGroup{}
 		for i := 0; i < len; i++ {
-			subdivision = wardList[i]
-			cadre, err := utils.GetCadreByCode(db, wardList[i].Code)
-			if err != nil {
-				respondError(w, notImplementedStatus.number, err.Error())
-				return
-			}
-			cadreResponse := CadreResponse{
-				Name:        cadre.Name.String,
-				Code:        cadre.Code,
-				Age:         uint8(cadre.Age.Int16),
-				Phone:       cadre.Phone.String,
-				Email:       cadre.Email.String,
-				Permission:  uint8(cadre.Permission),
-				Subdivision: subdivision,
-			}
-			cadreResponseArray = append(cadreResponseArray, cadreResponse)
+			wg.Add(1)
+			go func(i int) {
+				subdivision = wardList[i]
+				cadre, err := utils.GetCadreByCode(db, wardList[i].Code)
+				if err != nil {
+					respondError(w, notImplementedStatus.number, err.Error())
+				} else {
+					cadreResponse := CadreResponse{
+						Name:        cadre.Name.String,
+						Code:        cadre.Code,
+						Age:         uint8(cadre.Age.Int16),
+						Phone:       cadre.Phone.String,
+						Email:       cadre.Email.String,
+						Permission:  uint8(cadre.Permission),
+						Subdivision: subdivision,
+					}
+					cadreResponseArray = append(cadreResponseArray, cadreResponse)
+				}
+				wg.Done()
+			}(i)
 		}
 	}
 
