@@ -55,6 +55,7 @@ type JwtResponse struct {
 }
 
 func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	res, err := json.Marshal(payload)
 	if err != nil {
 		respondError(w, internalErrorStatus.number, internalErrorStatus.description)
@@ -66,6 +67,7 @@ func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
 }
 
 func respondError(w http.ResponseWriter, code int, message string) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	respondJSON(w, code, map[string]string{"error": message})
 }
 
