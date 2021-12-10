@@ -9,9 +9,13 @@ import (
 const countryName = "Việt Nam"
 
 func GetProvinceList(db *sql.DB, w http.ResponseWriter, r *http.Request) {
-	provinceList, population := utils.GetProvinceList(db)
+	page, limit := getPageAndLimit(r)
+	searchKey, _ := getParam(r, "key")
+
+	provinceList, population, amount := utils.GetProvinceList(db, page, limit, searchKey)
 	subDivRes := SubdivisionResponse{
 		Area:       countryName,
+		Amount:     amount,
 		Data:       provinceList,
 		Population: uint32(population),
 	}
@@ -19,22 +23,23 @@ func GetProvinceList(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 }
 
 func GetDistrictListByProvinceCode(db *sql.DB, w http.ResponseWriter, r *http.Request) {
-	keys, ok := r.URL.Query()["province_code"]
+	provinceCode, err := getParam(r, "province_code")
+	searchKey, _ := getParam(r, "key")
 
-	if !ok || len(keys[0]) < 1 {
-		respondError(w, 400, "URL Param is missing")
+	if err != nil {
+		respondError(w, 400, err.Error())
 		return
 	}
+	page, limit := getPageAndLimit(r)
 
-	key := keys[0]
-
-	districtList, v1, v2 := utils.GetDistrictListByProvinceCode(db, key)
+	districtList, v1, v2, amount := utils.GetDistrictListByProvinceCode(db, provinceCode, page, limit, searchKey)
 	if v1 == utils.ErrorFlag {
 		respondError(w, 501, v2)
 		return
 	}
 	subDivRes := SubdivisionResponse{
 		Area:       v2,
+		Amount:     amount,
 		Data:       districtList,
 		Population: uint32(v1),
 	}
@@ -42,22 +47,23 @@ func GetDistrictListByProvinceCode(db *sql.DB, w http.ResponseWriter, r *http.Re
 }
 
 func GetWardListByDistrictCode(db *sql.DB, w http.ResponseWriter, r *http.Request) {
-	keys, ok := r.URL.Query()["district_code"]
+	districtCode, err := getParam(r, "district_code")
+	searchKey, _ := getParam(r, "key")
 
-	if !ok || len(keys[0]) < 1 {
-		go respondError(w, 400, "URL Param is missing")
+	if err != nil {
+		respondError(w, 400, err.Error())
 		return
 	}
 
-	key := keys[0]
-
-	wardList, v1, v2 := utils.GetWardListByDistrictCode(db, key)
+	page, limit := getPageAndLimit(r)
+	wardList, v1, v2, amount := utils.GetWardListByDistrictCode(db, districtCode, page, limit, searchKey)
 	if v1 == utils.ErrorFlag {
 		respondError(w, 501, v2)
 		return
 	}
 	subDivRes := SubdivisionResponse{
 		Area:       v2,
+		Amount:     amount,
 		Data:       wardList,
 		Population: uint32(v1),
 	}

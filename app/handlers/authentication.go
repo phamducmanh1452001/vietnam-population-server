@@ -3,6 +3,8 @@ package handlers
 import (
 	"database/sql"
 	"net/http"
+	"strings"
+	"time"
 	"vietnam-population-server/app/utils"
 )
 
@@ -33,4 +35,25 @@ func Login(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 
 	jwtResponse := JwtResponse{Token: tokenString}
 	respondJSON(w, http.StatusOK, jwtResponse)
+}
+
+func Logout(sb *sql.DB, w http.ResponseWriter, r *http.Request) {
+	headerParam := "Authorization"
+	if r.Header[headerParam] != nil {
+		authString := r.Header[headerParam][0]
+		tokenStrings := strings.Split(authString, " ")
+		if len(tokenStrings) <= 1 {
+			respondError(w, badRequestStatus.number, "Missing Brearer"+headerParam)
+			return
+		}
+		tokenString := tokenStrings[1]
+		blackTokenList[tokenString] = 1
+		respondJSON(w, 200, map[string]string{"message": "logout success"})
+		go func(tokenString string) {
+			time.Sleep(expiredTime)
+			blackTokenList[tokenString] = 0
+		}(tokenString)
+	} else {
+		respondError(w, badRequestStatus.number, "Missing "+headerParam)
+	}
 }

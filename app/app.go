@@ -14,7 +14,7 @@ import (
 
 type Handle func(db *sql.DB, w http.ResponseWriter, r *http.Request)
 
-var sqlUrl = "wxKmYNfzWA:2oVGW6sXGC@tcp(remotemysql.com:3306)/wxKmYNfzWA" //"root:root@tcp(localhost:3306)/vietnam_population" //
+var sqlUrl = "root:root@tcp(localhost:3306)/vietnam_population" // "wxKmYNfzWA:2oVGW6sXGC@tcp(remotemysql.com:3306)/wxKmYNfzWA"
 
 type App struct {
 	Router *utils.Router
@@ -35,13 +35,15 @@ func (a *App) Run(host string) {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
+
 	var err error
 	a.db, err = sql.Open("mysql", sqlUrl)
 	if err != nil {
 		log.Fatalln("Cannot open mysql")
 	}
 	log.Printf("Server is running ...")
-	log.Fatal(a.server.ListenAndServe())
+
+	log.Fatal(a.server.ListenAndServeTLS("server.cert", "server.key"))
 }
 
 func (a *App) setRouters() {
@@ -51,6 +53,8 @@ func (a *App) setRouters() {
 	a.Router.Add("/api/wards", a.handleRequest(handlers.GetWardListByDistrictCode))
 
 	a.Router.Add("/api/login", a.handleRequest(handlers.Login))
+	a.Router.Add("/api/logout", a.handleRequest(handlers.Logout))
+
 	a.Router.Add("/api/lower-cadres", handlers.IsAuthorized(a.handleRequest(handlers.GetLowerCadreListByCode)))
 }
 

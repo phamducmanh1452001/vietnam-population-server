@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -21,6 +22,7 @@ var (
 	internalErrorStatus  = statusCode{number: 500, description: "Internal Server Error"}
 	mySigningKey         = []byte("this is a line")
 	expiredTime          = time.Hour * 1
+	blackTokenList       = make(map[string]int)
 )
 
 type statusCode struct {
@@ -30,12 +32,14 @@ type statusCode struct {
 
 type SubdivisionResponse struct {
 	Area       string      `json:"area"`
+	Amount     int         `json:"amount"`
 	Population uint32      `json:"population"`
 	Data       interface{} `json:"data"`
 }
 
 type CadreListResponse struct {
 	Area       string          `json:"area"`
+	Amount     int             `json:"amount"`
 	Population uint32          `json:"population"`
 	Data       []CadreResponse `json:"data"`
 }
@@ -55,19 +59,18 @@ type JwtResponse struct {
 }
 
 func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	res, err := json.Marshal(payload)
 	if err != nil {
 		respondError(w, internalErrorStatus.number, internalErrorStatus.description)
 		return
 	}
 	w.WriteHeader(status)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte(res))
 }
 
 func respondError(w http.ResponseWriter, code int, message string) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	respondJSON(w, code, map[string]string{"error": message})
 }
 
@@ -97,7 +100,7 @@ func IsAuthorized(endpoint utils.Handle) utils.Handle {
 			exp := int64(claims["exp"].(float64))
 			isExpired := now-exp > int64(expiredTime)
 
-			if token.Valid && !isExpired {
+			if token.Valid && !isExpired && blackTokenList[tokenString] != 1 {
 				endpoint(w, r)
 			} else {
 				respondError(w, unauthorizedStatus.number, unauthorizedStatus.description)
@@ -146,4 +149,39 @@ func getClaims(r *http.Request) (jwt.MapClaims, error) {
 	}
 
 	return claims, errors.New("Missing " + headerParam)
+}
+
+func getPageAndLimit(r *http.Request) (int, int) {
+	var (
+		defaultPage  = 1
+		defaultLimit = 10
+	)
+
+	pages, ok1 := r.URL.Query()["page"]
+	limits, ok2 := r.URL.Query()["limit"]
+
+	page := defaultPage
+	limit := defaultLimit
+
+	if ok1 && ok2 && len(pages) >= 1 || len(limits) >= 1 {
+		var err1, err2 error
+		page, err1 = strconv.Atoi(pages[0])
+		limit, err2 = strconv.Atoi(limits[0])
+		if err1 != nil || err2 != nil {
+			page = defaultPage
+			limit = defaultLimit
+		}
+	}
+
+	return page, limit
+}
+
+func getParam(r *http.Request, key string) (string, error) {
+	keys, ok := r.URL.Query()[key]
+
+	if !ok || len(keys) < 1 {
+		return "", errors.New("URL Param is missing")
+	}
+
+	return keys[0], nil
 }
