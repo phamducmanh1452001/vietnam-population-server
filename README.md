@@ -12,7 +12,7 @@ Lấy danh sách phường/xã/thị trấn theo mã quận/huyện (district_co
 GET https://103.82.21.73/api/wards?district_code={string}&page={int}&limit={int}&key={string} <br />
 
 Cán bộ đăng nhập (Mặc định password trùng code): <br />
-POST hhttps://103.82.21.73/api/login <br />
+POST https://103.82.21.73/api/login <br />
 Content-Type: application/x-www-form-urlencoded<br />
 { <br />
     "code": "YOUR_CODE", <br />

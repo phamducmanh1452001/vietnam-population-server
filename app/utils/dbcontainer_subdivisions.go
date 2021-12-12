@@ -40,7 +40,6 @@ func GetProvinceList(db *sql.DB, page int, limit int, key string) ([]subDivs.Pro
 
 	log.Println(query)
 	results, err = db.Query(query)
-	defer db.Close()
 
 	if err != nil {
 		log.Println("Error: ", err.Error())
@@ -59,8 +58,8 @@ func GetProvinceList(db *sql.DB, page int, limit int, key string) ([]subDivs.Pro
 		}
 	}
 
-	amountQuery := fmt.Sprintf("SELECT COUNT(code) FROM %s WHERE (%s) or (%s) LIMIT %d OFFSET %d",
-		table, codeSearch, nameSearch, limit, offset)
+	amountQuery := fmt.Sprintf("SELECT COUNT(code) FROM %s WHERE (%s) or (%s)",
+		table, codeSearch, nameSearch)
 	log.Println(amountQuery)
 	results, err = db.Query(amountQuery)
 
@@ -104,7 +103,6 @@ func GetDistrictListByProvinceCode(db *sql.DB, provinceCode string, page int, li
 
 	log.Println(query)
 	results, err := db.Query(query)
-	defer db.Close()
 
 	if err != nil {
 		log.Println("Error: ", err.Error())
@@ -172,7 +170,6 @@ func GetWardListByDistrictCode(db *sql.DB, districtCode string, page int, limit 
 
 	log.Println(query)
 	results, err := db.Query(query)
-	defer db.Close()
 
 	if err != nil {
 		log.Println("Error: ", err.Error())
@@ -226,7 +223,6 @@ func GetProvinceByCode(db *sql.DB, code string) (subDivs.Province, error) {
 
 	log.Println(query)
 	results, err := db.Query(query)
-	defer db.Close()
 
 	if err != nil {
 		return province, err
@@ -255,7 +251,6 @@ func GetDistrictByCode(db *sql.DB, code string) (subDivs.District, error) {
 
 	log.Println(query)
 	results, err := db.Query(query)
-	defer db.Close()
 
 	if err != nil {
 		return district, err
@@ -284,7 +279,6 @@ func GetWardByCode(db *sql.DB, code string) (subDivs.Ward, error) {
 
 	log.Println(query)
 	results, err := db.Query(query)
-	defer db.Close()
 
 	if err != nil {
 		return ward, err
