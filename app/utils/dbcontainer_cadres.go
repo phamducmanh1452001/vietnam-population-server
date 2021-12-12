@@ -20,6 +20,8 @@ func GetCadreByCodeAndPassword(db *sql.DB, code string, password string) (cadre.
 
 	log.Println(query)
 	results, err := db.Query(query)
+	defer db.Close()
+
 	if err != nil {
 		log.Println("Error: ", err.Error())
 		return cadre, err
@@ -47,6 +49,8 @@ func GetCadreListBySuperCode(db *sql.DB, superCode string, page int, limit int) 
 
 	log.Println(query)
 	results, err := db.Query(query)
+	defer db.Close()
+
 	if err != nil {
 		log.Println("Error: ", err.Error())
 		return cadreList, err
