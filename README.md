@@ -3,7 +3,7 @@
 Các api danh sách có chức năng search theo code và name với param key
 
 Lấy danh sách tỉnh/thành phố: <br />
-GET https://103.82.21.73/api/provinces&page={int}&limit={int}&key={string} <br />
+GET https://103.82.21.73/api/provinces?page={int}&limit={int}&key={string} <br />
 
 Lấy danh sách quận/huyện theo mã tỉnh/thành phố (province_code): <br />
 GET https://103.82.21.73/api/districts?province_code={string}&page={int}&limit={int}&key={string} <br />
