@@ -43,7 +43,7 @@ func (a *App) Run(host string) {
 	}
 	log.Printf("Server is running ...")
 
-	log.Fatal(a.server.ListenAndServeTLS("server.cert", "server.key"))
+	log.Fatal(a.server.ListenAndServe())
 }
 
 func (a *App) setRouters() {

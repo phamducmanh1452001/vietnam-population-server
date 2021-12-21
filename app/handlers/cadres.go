@@ -96,7 +96,6 @@ func GetLowerCadreListByCode(db *sql.DB, w http.ResponseWriter, r *http.Request)
 			cadreResponseArray = append(cadreResponseArray, cadreResponse)
 		}
 	}
-	fmt.Println(len(cadreList))
 
 	cadreListResponse = CadreListResponse{
 		Area:       area,

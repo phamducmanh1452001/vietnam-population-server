@@ -64,9 +64,14 @@ func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
 		respondError(w, internalErrorStatus.number, internalErrorStatus.description)
 		return
 	}
-	w.WriteHeader(status)
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Content-Type", "application/json")
+
+	header := w.Header()
+	header.Add("Access-Control-Allow-Origin", "*")
+	header.Add("Content-Type", "application/json")
+	header.Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
+	header.Add("Access-Control-Allow-Headers", "*")
+	go w.WriteHeader(status)
+
 	w.Write([]byte(res))
 }
 
