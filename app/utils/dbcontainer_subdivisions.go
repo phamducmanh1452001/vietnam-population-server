@@ -74,6 +74,7 @@ func GetProvinceList(db *sql.DB, page int, limit int, key string) ([]subDivs.Pro
 			log.Println("Error: ", err.Error())
 		}
 	}
+	results.Close()
 
 	return provinceList, population, amount
 }
@@ -142,6 +143,7 @@ func GetDistrictListByProvinceCode(db *sql.DB, provinceCode string, page int, li
 		log.Println("Error: ", err.Error())
 		return districtList, ErrorFlag, queryError, amount
 	}
+	results.Close()
 
 	return districtList, population, province.Name, amount
 }
@@ -237,6 +239,7 @@ func GetProvinceByCode(db *sql.DB, code string) (subDivs.Province, error) {
 
 		province.Level = getLevelFromSubdivisionName(province.Name, province.Code)
 	}
+	results.Close()
 
 	return province, nil
 }
@@ -265,6 +268,7 @@ func GetDistrictByCode(db *sql.DB, code string) (subDivs.District, error) {
 
 		district.Level = getLevelFromSubdivisionName(district.Name, district.Code)
 	}
+	results.Close()
 
 	return district, nil
 }
@@ -294,6 +298,7 @@ func GetWardByCode(db *sql.DB, code string) (subDivs.Ward, error) {
 		ward.Level = getLevelFromSubdivisionName(ward.Name, ward.Code)
 	}
 
+	results.Close()
 	return ward, nil
 }
 

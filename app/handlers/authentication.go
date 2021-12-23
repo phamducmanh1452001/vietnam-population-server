@@ -5,10 +5,11 @@ import (
 	"net/http"
 	"strings"
 	"time"
+	"vietnam-population-server/app/router"
 	"vietnam-population-server/app/utils"
 )
 
-func Login(db *sql.DB, w http.ResponseWriter, r *http.Request) {
+func Login(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		respondError(w, badRequestStatus.number, badRequestStatus.description)
 		return
@@ -37,7 +38,7 @@ func Login(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	respondJSON(w, http.StatusOK, jwtResponse)
 }
 
-func Logout(sb *sql.DB, w http.ResponseWriter, r *http.Request) {
+func Logout(sb *sql.DB, w *router.ResponseWriter, r *http.Request) {
 	headerParam := "Authorization"
 	if r.Header[headerParam] != nil {
 		authString := r.Header[headerParam][0]

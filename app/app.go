@@ -7,23 +7,23 @@ import (
 	"net/http"
 	"time"
 	"vietnam-population-server/app/handlers"
-	"vietnam-population-server/app/utils"
+	"vietnam-population-server/app/router"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type Handle func(db *sql.DB, w http.ResponseWriter, r *http.Request)
+type Handle func(db *sql.DB, w *router.ResponseWriter, r *http.Request)
 
-var sqlUrl = "root:root@tcp(localhost:3306)/vietnam_population" // "wxKmYNfzWA:2oVGW6sXGC@tcp(remotemysql.com:3306)/wxKmYNfzWA"
+var sqlUrl = "root:root@tcp(localhost:3306)/vietnam_population?multiStatements=true" // "wxKmYNfzWA:2oVGW6sXGC@tcp(remotemysql.com:3306)/wxKmYNfzWA"
 
 type App struct {
-	Router *utils.Router
+	Router *router.Router
 	server *http.Server
 	db     *sql.DB
 }
 
 func (a *App) Init() {
-	a.Router = utils.NewRouter()
+	a.Router = router.NewRouter()
 	a.setRouters()
 }
 
@@ -56,14 +56,15 @@ func (a *App) setRouters() {
 	a.Router.Add("/api/logout", a.handleRequest(handlers.Logout))
 
 	a.Router.Add("/api/lower-cadres", handlers.IsAuthorized(a.handleRequest(handlers.GetLowerCadreListByCode)))
+	a.Router.Add("/api/citizens", handlers.IsAuthorized(a.handleRequest(handlers.GetCitizenList)))
 }
 
-func homePage(w http.ResponseWriter, r *http.Request) {
+func homePage(w *router.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Home Page")
 }
 
-func (a *App) handleRequest(handler Handle) utils.Handle {
-	return func(w http.ResponseWriter, r *http.Request) {
+func (a *App) handleRequest(handler Handle) func(w *router.ResponseWriter, r *http.Request) {
+	return func(w *router.ResponseWriter, r *http.Request) {
 		handler(a.db, w, r)
 	}
 }

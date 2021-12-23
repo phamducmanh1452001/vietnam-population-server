@@ -4,10 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"vietnam-population-server/app/router"
 	"vietnam-population-server/app/utils"
 )
 
-func GetLowerCadreListByCode(db *sql.DB, w http.ResponseWriter, r *http.Request) {
+func GetLowerCadreListByCode(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
 	claims, err := getClaims(r)
 	page, limit := getPageAndLimit(r)
 	searchKey, _ := getParam(r, "key")

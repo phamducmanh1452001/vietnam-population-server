@@ -11,7 +11,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if len(port) < 1 {
-		port = "443"
+		port = "3000"
 	}
 	app.Run(":" + port)
 }

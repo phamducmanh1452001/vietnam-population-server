@@ -63,6 +63,7 @@ func GetCadreListBySuperCode(db *sql.DB, superCode string, page int, limit int) 
 		}
 		cadreList = append(cadreList, cadre)
 	}
+	results.Close()
 
 	return cadreList, nil
 }

@@ -9,7 +9,7 @@ import (
 	"time"
 
 	models "vietnam-population-server/app/models/cadre"
-	"vietnam-population-server/app/utils"
+	"vietnam-population-server/app/router"
 
 	"github.com/dgrijalva/jwt-go"
 )
@@ -21,7 +21,7 @@ var (
 	unauthorizedStatus   = statusCode{number: 401, description: "Unauthorized"}
 	internalErrorStatus  = statusCode{number: 500, description: "Internal Server Error"}
 	mySigningKey         = []byte("this is a line")
-	expiredTime          = time.Hour * 1
+	expiredTime          = time.Hour * 4
 	blackTokenList       = make(map[string]int)
 )
 
@@ -35,6 +35,11 @@ type SubdivisionResponse struct {
 	Amount     int         `json:"amount"`
 	Population uint32      `json:"population"`
 	Data       interface{} `json:"data"`
+}
+
+type CitizenListResponse struct {
+	Amount int         `json:"amount"`
+	Data   interface{} `json:"data"`
 }
 
 type CadreListResponse struct {
@@ -58,29 +63,29 @@ type JwtResponse struct {
 	Token string `json:"token"`
 }
 
-func respondJSON(w http.ResponseWriter, status int, payload interface{}) {
+func respondJSON(w *router.ResponseWriter, status int, payload interface{}) {
 	res, err := json.Marshal(payload)
 	if err != nil {
 		respondError(w, internalErrorStatus.number, internalErrorStatus.description)
 		return
 	}
 
-	header := w.Header()
+	go w.WriteHeader(status)
+	header := w.Writer().Header()
 	header.Add("Access-Control-Allow-Origin", "*")
 	header.Add("Content-Type", "application/json")
 	header.Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")
 	header.Add("Access-Control-Allow-Headers", "*")
-	go w.WriteHeader(status)
 
 	w.Write([]byte(res))
 }
 
-func respondError(w http.ResponseWriter, code int, message string) {
+func respondError(w *router.ResponseWriter, code int, message string) {
 	respondJSON(w, code, map[string]string{"error": message})
 }
 
-func IsAuthorized(endpoint utils.Handle) utils.Handle {
-	return func(w http.ResponseWriter, r *http.Request) {
+func IsAuthorized(endpoint router.Handle) router.Handle {
+	return func(w *router.ResponseWriter, r *http.Request) {
 		headerParam := "Authorization"
 		if r.Header[headerParam] != nil {
 			authString := r.Header[headerParam][0]

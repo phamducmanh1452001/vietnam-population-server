@@ -3,12 +3,13 @@ package handlers
 import (
 	"database/sql"
 	"net/http"
+	"vietnam-population-server/app/router"
 	"vietnam-population-server/app/utils"
 )
 
 const countryName = "Việt Nam"
 
-func GetProvinceList(db *sql.DB, w http.ResponseWriter, r *http.Request) {
+func GetProvinceList(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
 	page, limit := getPageAndLimit(r)
 	searchKey, _ := getParam(r, "key")
 
@@ -22,7 +23,7 @@ func GetProvinceList(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	respondJSON(w, http.StatusOK, subDivRes)
 }
 
-func GetDistrictListByProvinceCode(db *sql.DB, w http.ResponseWriter, r *http.Request) {
+func GetDistrictListByProvinceCode(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
 	provinceCode, err := getParam(r, "province_code")
 	searchKey, _ := getParam(r, "key")
 
@@ -46,7 +47,7 @@ func GetDistrictListByProvinceCode(db *sql.DB, w http.ResponseWriter, r *http.Re
 	respondJSON(w, http.StatusOK, subDivRes)
 }
 
-func GetWardListByDistrictCode(db *sql.DB, w http.ResponseWriter, r *http.Request) {
+func GetWardListByDistrictCode(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
 	districtCode, err := getParam(r, "district_code")
 	searchKey, _ := getParam(r, "key")
 
