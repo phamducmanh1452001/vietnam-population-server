@@ -3,16 +3,16 @@
 Các api danh sách có chức năng search theo code và name với param key
 
 Lấy danh sách tỉnh/thành phố: <br />
-GET https://103.82.21.73/api/provinces?page={int}&limit={int}&key={string} <br />
+GET https://www.phorifai.xyz/api/provinces?page={int}&limit={int}&key={string} <br />
 
 Lấy danh sách quận/huyện theo mã tỉnh/thành phố (province_code): <br />
-GET https://103.82.21.73/api/districts?province_code={string}&page={int}&limit={int}&key={string} <br />
+GET https://www.phorifai.xyz/api/districts?province_code={string}&page={int}&limit={int}&key={string} <br />
 
 Lấy danh sách phường/xã/thị trấn theo mã quận/huyện (district_code): <br />
-GET https://103.82.21.73/api/wards?district_code={string}&page={int}&limit={int}&key={string} <br />
+GET https://www.phorifai.xyz/api/wards?district_code={string}&page={int}&limit={int}&key={string} <br />
 
 Cán bộ đăng nhập (Mặc định password trùng code): <br />
-POST https://103.82.21.73/api/login <br />
+POST https://www.phorifai.xyz/api/login <br />
 Content-Type: application/x-www-form-urlencoded<br />
 { <br />
     "code": "YOUR_CODE", <br />
@@ -20,10 +20,33 @@ Content-Type: application/x-www-form-urlencoded<br />
 } <br />
 
 Cán bộ đăng xuất: <br />
-POST https://103.82.21.73/api/logout <br />
+POST https://www.phorifai.xyz/api/logout <br />
 Authorization: Bearer "YOUR_TOKEN" <br />
 
 Lấy danh sách cán bộ cấp dưới (dựa vào bearer token của cán bộ cấp trên): <br />
-GET https://103.82.21.73/api/lower-cadres&page={int}&limit={int}&key={string} <br />
+GET https://www.phorifai.xyz/api/lower-cadres&page={int}&limit={int}&key={string} <br />
 Authorization: Bearer "YOUR_TOKEN" <br />
 
+Lấy danh sách công dân (dựa vào bearer token của cán bộ quản lý): <br />
+GET https://www.phorifai.xyz/api/citizens?page=2&limit=12 <br />
+Authorization: Bearer "YOUR_TOKEN" <br />
+
+Thay đổi quyền khai báo với cán bộ cấp dưới (0 hoặc 1): <br />
+POST https://www.phorifai.xyz/api/change-cadre-permission <br />
+Content-Type: application/x-www-form-urlencoded<br />
+{ <br />
+    "code": "CADRE_CODE", <br />
+    "permission": 1 <br />
+} <br />
+
+Upload ảnh: (nên nén data ảnh <= 500KB)<br />
+POST https://www.phorifai.xyz/api/upload <br />
+Content-Type: multipart/form-data<br />
+{
+    image: {Data}
+}
+
+Download ảnh:
+GET http://www.phorifai.xyz/api/images?name={string}
+
+Ví dụ: http://www.phorifai.xyz/api/images?name=avatar1757368390.png
