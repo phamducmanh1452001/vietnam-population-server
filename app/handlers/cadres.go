@@ -30,7 +30,7 @@ func GetLowerCadreListByCode(db *sql.DB, w *router.ResponseWriter, r *http.Reque
 	var amount int = 0
 	code := fmt.Sprintf("%v", claims["code"])
 
-	cadreList, err := utils.GetCadreListBySuperCode(db, code, page, limit)
+	cadreList, err := utils.GetCadreListBySuperCode(db, code, page, limit, searchKey)
 
 	if err != nil {
 		respondError(w, internalErrorStatus.number, err.Error())
@@ -42,7 +42,7 @@ func GetLowerCadreListByCode(db *sql.DB, w *router.ResponseWriter, r *http.Reque
 		districtList, v1, v2, cnt := utils.GetDistrictListByProvinceCode(db, code, page, limit, searchKey)
 		amount = cnt
 		if v1 == utils.ErrorFlag {
-			respondError(w, internalErrorStatus.number, "Database error")
+			respondError(w, internalErrorStatus.number, "Database error1")
 			return
 		}
 		population = uint32(v1)
@@ -50,7 +50,7 @@ func GetLowerCadreListByCode(db *sql.DB, w *router.ResponseWriter, r *http.Reque
 
 		if len(cadreList) != len(districtList) {
 			fmt.Println(len(cadreList), " ", len(districtList))
-			respondError(w, internalErrorStatus.number, "Database error")
+			respondError(w, internalErrorStatus.number, "Database error2")
 			return
 		}
 

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strings"
 	cadre "vietnam-population-server/app/models/cadre"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -37,13 +38,27 @@ func GetCadreByCodeAndPassword(db *sql.DB, code string, password string) (cadre.
 	return cadre, errors.New("code or password was wrong")
 }
 
-func GetCadreListBySuperCode(db *sql.DB, superCode string, page int, limit int) ([]cadre.Cadre, error) {
+func GetCadreListBySuperCode(db *sql.DB, superCode string, page int, limit int, key string) ([]cadre.Cadre, error) {
 	cadreList := []cadre.Cadre{}
 
 	table := "cadres"
 	fields := "code, name, password, age, phone, email"
 	offset := (page - 1) * limit
-	condition := fmt.Sprintf("WHERE super_code = '%s' LIMIT %d OFFSET %d", superCode, limit, offset)
+	codeSearch := " true "
+	nameSearch := " true "
+	words := getSearchKeyArray(key)
+	for _, word := range words {
+		if word == "" {
+			continue
+		}
+		lowerWord := strings.ToLower(word)
+		codeSearch += " AND code LIKE '%" + lowerWord + "%' "
+		nameSearch += " AND LOWER(name) LIKE BINARY '%" + lowerWord + "%' "
+	}
+	// condition := fmt.Sprintf("WHERE super_code = '%s' LIMIT %d OFFSET %d",
+	// 	superCode, limit, offset)
+	condition := fmt.Sprintf("WHERE super_code = '%s' and ((%s) or (%s)) LIMIT %d OFFSET %d",
+		superCode, nameSearch, codeSearch, limit, offset)
 	query := fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)
 
 	log.Println(query)
