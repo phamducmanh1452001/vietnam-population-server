@@ -14,7 +14,7 @@ import (
 
 type Handle func(db *sql.DB, w *router.ResponseWriter, r *http.Request)
 
-var sqlUrl = "root:root@tcp(localhost:3306)/vietnam_population?multiStatements=true" // "wxKmYNfzWA:2oVGW6sXGC@tcp(remotemysql.com:3306)/wxKmYNfzWA"
+var sqlUrl = "root:root@tcp(localhost:3306)/vietnam_population?multiStatements=true&timeout=5s&tls=false&autocommit=true" // "wxKmYNfzWA:2oVGW6sXGC@tcp(remotemysql.com:3306)/wxKmYNfzWA"
 
 type App struct {
 	Router *router.Router
@@ -38,6 +38,8 @@ func (a *App) Run(host string) {
 
 	var err error
 	a.db, err = sql.Open("mysql", sqlUrl)
+	a.db.SetMaxIdleConns(0)
+	a.db.SetMaxOpenConns(500)
 	if err != nil {
 		log.Fatalln("Cannot open mysql")
 	}

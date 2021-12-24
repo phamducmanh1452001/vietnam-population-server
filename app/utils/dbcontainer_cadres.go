@@ -94,6 +94,7 @@ func GetCadreByCode(db *sql.DB, code string) (cadre.Cadre, error) {
 			return cadre, errors.New("cannot scan result from database")
 		}
 	}
+	results.Close()
 
 	return cadre, nil
 }
