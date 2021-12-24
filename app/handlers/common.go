@@ -31,7 +31,8 @@ type statusCode struct {
 }
 
 type SubdivisionResponse struct {
-	Area       string      `json:"area"`
+	AreaSize   float64     `json:"area"`
+	Area       string      `json:"area_name"`
 	Amount     int         `json:"amount"`
 	Population uint32      `json:"population"`
 	Data       interface{} `json:"data"`

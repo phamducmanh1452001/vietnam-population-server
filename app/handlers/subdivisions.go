@@ -14,7 +14,12 @@ func GetProvinceList(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
 	searchKey, _ := getParam(r, "key")
 
 	provinceList, population, amount := utils.GetProvinceList(db, page, limit, searchKey)
+	var areaSize float64 = 0
+	for _, v := range provinceList {
+		areaSize = areaSize + v.Area
+	}
 	subDivRes := SubdivisionResponse{
+		AreaSize:   areaSize,
 		Area:       countryName,
 		Amount:     amount,
 		Data:       provinceList,
@@ -38,7 +43,12 @@ func GetDistrictListByProvinceCode(db *sql.DB, w *router.ResponseWriter, r *http
 		respondError(w, 501, v2)
 		return
 	}
+	var areaSize float64 = 0
+	for _, v := range districtList {
+		areaSize = areaSize + v.Area
+	}
 	subDivRes := SubdivisionResponse{
+		AreaSize:   areaSize,
 		Area:       v2,
 		Amount:     amount,
 		Data:       districtList,
@@ -62,7 +72,12 @@ func GetWardListByDistrictCode(db *sql.DB, w *router.ResponseWriter, r *http.Req
 		respondError(w, 501, v2)
 		return
 	}
+	var areaSize float64 = 0
+	for _, v := range wardList {
+		areaSize = areaSize + v.Area
+	}
 	subDivRes := SubdivisionResponse{
+		AreaSize:   areaSize,
 		Area:       v2,
 		Amount:     amount,
 		Data:       wardList,
