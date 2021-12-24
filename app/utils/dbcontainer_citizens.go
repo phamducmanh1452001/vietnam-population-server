@@ -54,6 +54,7 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 
 		citizenList = append(citizenList, citizen)
 	}
+	results.Close()
 
 	query = fmt.Sprintf("SELECT COUNT(code) FROM %s %s", table, condition)
 	log.Println(query)

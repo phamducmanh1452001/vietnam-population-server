@@ -57,6 +57,7 @@ func GetProvinceList(db *sql.DB, page int, limit int, key string) ([]subDivs.Pro
 			provinceList = append(provinceList, province)
 		}
 	}
+	results.Close()
 
 	amountQuery := fmt.Sprintf("SELECT COUNT(code) FROM %s WHERE (%s) or (%s)",
 		table, codeSearch, nameSearch)
@@ -121,6 +122,7 @@ func GetDistrictListByProvinceCode(db *sql.DB, provinceCode string, page int, li
 			districtList = append(districtList, district)
 		}
 	}
+	results.Close()
 
 	amountQuery := fmt.Sprintf("SELECT COUNT(code) FROM %s %s",
 		table, condition)
@@ -189,6 +191,7 @@ func GetWardListByDistrictCode(db *sql.DB, districtCode string, page int, limit 
 			wardList = append(wardList, ward)
 		}
 	}
+	results.Close()
 
 	amountQuery := fmt.Sprintf("SELECT COUNT(code) FROM %s %s",
 		table, condition)
@@ -205,6 +208,7 @@ func GetWardListByDistrictCode(db *sql.DB, districtCode string, page int, limit 
 			log.Println("Error: ", err.Error())
 		}
 	}
+	results.Close()
 
 	district, err := GetDistrictByCode(db, districtCode)
 	if err != nil {
