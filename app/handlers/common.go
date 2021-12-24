@@ -70,7 +70,7 @@ func respondJSON(w *router.ResponseWriter, status int, payload interface{}) {
 		return
 	}
 
-	go w.WriteHeader(status)
+	w.WriteHeader(status)
 	header := w.Writer().Header()
 	header.Add("Access-Control-Allow-Origin", "*")
 	header.Add("Content-Type", "application/json")

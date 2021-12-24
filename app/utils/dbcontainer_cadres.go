@@ -41,7 +41,7 @@ func GetCadreListBySuperCode(db *sql.DB, superCode string, page int, limit int) 
 	cadreList := []cadre.Cadre{}
 
 	table := "cadres"
-	fields := "code, name, password, age, phone, email, permission"
+	fields := "code, name, password, age, phone, email"
 	offset := (page - 1) * limit
 	condition := fmt.Sprintf("WHERE super_code = '%s' LIMIT %d OFFSET %d", superCode, limit, offset)
 	query := fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)
@@ -57,9 +57,13 @@ func GetCadreListBySuperCode(db *sql.DB, superCode string, page int, limit int) 
 	var cadre cadre.Cadre
 
 	for results.Next() {
-		err := results.Scan(&cadre.Code, &cadre.Name, &cadre.Password, &cadre.Age, &cadre.Phone, &cadre.Email, &cadre.Permission)
+		err := results.Scan(&cadre.Code, &cadre.Name, &cadre.Password, &cadre.Age, &cadre.Phone, &cadre.Email)
 		if err != nil {
 			return cadreList, errors.New("cannot scan result from database")
+		}
+		cadre.Permission, err = GetCadrePermissionByCode(db, cadre.Code)
+		if err != nil {
+			return cadreList, errors.New("cannot get permission result from database")
 		}
 		cadreList = append(cadreList, cadre)
 	}
@@ -68,27 +72,58 @@ func GetCadreListBySuperCode(db *sql.DB, superCode string, page int, limit int) 
 	return cadreList, nil
 }
 
-// func GetCadreByCode(db *sql.DB, code string) (cadre.Cadre, error) {
-// 	cadre := cadre.Cadre{}
+func GetCadreByCode(db *sql.DB, code string) (cadre.Cadre, error) {
+	cadre := cadre.Cadre{}
 
-// 	table := "cadres"
-// 	fields := "code, name, password, age, phone, email, permission"
-// 	condition := fmt.Sprintf("WHERE code = '%s'", code)
-// 	query := fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)
+	table := "cadres"
+	fields := "code, name, password, age, phone, email, permission, super_code"
+	condition := fmt.Sprintf("WHERE code = '%s'", code)
+	query := fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)
 
-// 	log.Println(query)
-// 	results, err := db.Query(query)
-// 	if err != nil {
-// 		log.Println("Error: ", err.Error())
-// 		return cadre, err
-// 	}
+	log.Println(query)
+	results, err := db.Query(query)
+	if err != nil {
+		log.Println("Error: ", err.Error())
+		return cadre, err
+	}
 
-// 	if results.Next() {
-// 		err := results.Scan(&cadre.Code, &cadre.Name, &cadre.Password, &cadre.Age, &cadre.Phone, &cadre.Email, &cadre.Permission)
-// 		if err != nil {
-// 			return cadre, errors.New("cannot scan result from database")
-// 		}
-// 	}
+	if results.Next() {
+		err := results.Scan(&cadre.Code, &cadre.Name, &cadre.Password, &cadre.Age,
+			&cadre.Phone, &cadre.Email, &cadre.Permission, &cadre.SuperCode)
+		if err != nil {
+			return cadre, errors.New("cannot scan result from database")
+		}
+	}
 
-// 	return cadre, nil
-// }
+	return cadre, nil
+}
+
+func GetCadrePermissionByCode(db *sql.DB, code string) (int, error) {
+	cadre, err := GetCadreByCode(db, code)
+	if err != nil {
+		return 0, err
+	}
+	if cadre.Permission == 0 {
+		return 0, nil
+	}
+	if cadre.SuperCode == "" {
+		return 1, nil
+	}
+	return GetCadrePermissionByCode(db, cadre.SuperCode)
+}
+
+func ChangeCadrePermisson(db *sql.DB, code string, permission int) error {
+	table := "cadres"
+	fields := "permission"
+	condition := fmt.Sprintf("WHERE code = '%s'", code)
+	query := fmt.Sprintf("UPDATE %s SET %s = %d %s", table, fields, permission, condition)
+
+	log.Println(query)
+	_, err := db.Query(query)
+	if err != nil {
+		log.Println("Error: ", err.Error())
+		return err
+	}
+
+	return nil
+}

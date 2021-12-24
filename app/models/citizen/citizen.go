@@ -11,4 +11,5 @@ type Citizen struct {
 	Weight        int    `json:"weight"`
 	DateOfJoining string `json:"date_of_joining"`
 	Religion      string `json:"religion"`
+	Avatar        string `json:"avatar"`
 }

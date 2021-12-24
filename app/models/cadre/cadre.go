@@ -9,5 +9,6 @@ type Cadre struct {
 	Age        sql.NullInt16
 	Phone      sql.NullString
 	Email      sql.NullString
-	Permission uint8
+	SuperCode  string
+	Permission int
 }

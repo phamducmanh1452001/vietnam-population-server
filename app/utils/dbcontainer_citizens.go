@@ -15,7 +15,7 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 
 	table := "citizens"
 	fields := `code, first_name, middle_name, last_name, gender,
-		date_of_birth, age, weight, date_of_joining, religion`
+		date_of_birth, age, weight, date_of_joining, religion, avatar`
 	offset := (page - 1) * limit
 
 	var code string
@@ -45,7 +45,7 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 	for results.Next() {
 		err = results.Scan(&citizen.Code, &citizen.FirstName, &middleName, &citizen.LastName,
 			&citizen.Gender, &citizen.DateOfBirth, &citizen.Age, &citizen.Weight,
-			&citizen.DateOfJoining, &religion)
+			&citizen.DateOfJoining, &religion, &citizen.Avatar)
 		if err != nil {
 			return citizenList, 0, errors.New("cannot scan result from database")
 		}
