@@ -21,7 +21,7 @@ func GetProvinceList(db *sql.DB, page int, limit int, key string) ([]subDivs.Pro
 	var amount int = 0
 
 	table := "provinces"
-	fields := "code, name, population"
+	fields := "code, name, area"
 	offset := (page - 1) * limit
 	words := getSearchKeyArray(key)
 	codeSearch := " true "
@@ -48,7 +48,8 @@ func GetProvinceList(db *sql.DB, page int, limit int, key string) ([]subDivs.Pro
 
 	var province subDivs.Province
 	for results.Next() {
-		err = results.Scan(&province.Code, &province.Name, &province.Population)
+		err = results.Scan(&province.Code, &province.Name, &province.Area)
+		province.Population, _ = getPopulationBySubdivisionCode(db, province.Code)
 		if err != nil {
 			log.Println("Error: ", err.Error())
 		} else {
@@ -86,7 +87,7 @@ func GetDistrictListByProvinceCode(db *sql.DB, provinceCode string, page int, li
 	var amount = 0
 
 	table := "districts"
-	fields := "code, name, super_code, population"
+	fields := "code, name, super_code, area"
 	offset := (page - 1) * limit
 	words := getSearchKeyArray(key)
 	codeSearch := " true "
@@ -113,7 +114,8 @@ func GetDistrictListByProvinceCode(db *sql.DB, provinceCode string, page int, li
 	var district subDivs.District
 
 	for results.Next() {
-		err = results.Scan(&district.Code, &district.Name, &district.SuperCode, &district.Population)
+		err = results.Scan(&district.Code, &district.Name, &district.SuperCode, &district.Area)
+		district.Population, _ = getPopulationBySubdivisionCode(db, district.Code)
 		if err != nil {
 			log.Println("Error: ", err.Error())
 		} else {
@@ -156,7 +158,7 @@ func GetWardListByDistrictCode(db *sql.DB, districtCode string, page int, limit 
 	var amount int = 0
 
 	table := "wards"
-	fields := "code, name, super_code, population"
+	fields := "code, name, super_code, area"
 	offset := (page - 1) * limit
 	words := getSearchKeyArray(key)
 	codeSearch := " true "
@@ -182,7 +184,8 @@ func GetWardListByDistrictCode(db *sql.DB, districtCode string, page int, limit 
 
 	var ward subDivs.Ward
 	for results.Next() {
-		err = results.Scan(&ward.Code, &ward.Name, &ward.SuperCode, &ward.Population)
+		err = results.Scan(&ward.Code, &ward.Name, &ward.SuperCode, &ward.Area)
+		ward.Population, _ = getPopulationBySubdivisionCode(db, ward.Code)
 		if err != nil {
 			log.Println("Error: ", err.Error())
 		} else {
@@ -223,7 +226,7 @@ func GetProvinceByCode(db *sql.DB, code string) (subDivs.Province, error) {
 	province := subDivs.Province{}
 
 	table := "provinces"
-	fields := "code, name, population"
+	fields := "code, name, area"
 	condition := fmt.Sprintf("WHERE	code = '%s'", code)
 	query := fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)
 
@@ -235,7 +238,8 @@ func GetProvinceByCode(db *sql.DB, code string) (subDivs.Province, error) {
 	}
 
 	if results.Next() {
-		err = results.Scan(&province.Code, &province.Name, &province.Population)
+		err = results.Scan(&province.Code, &province.Name, &province.Area)
+		province.Population, _ = getPopulationBySubdivisionCode(db, province.Code)
 		if err != nil {
 			log.Println("Error: ", err.Error())
 			return province, err
@@ -252,7 +256,7 @@ func GetDistrictByCode(db *sql.DB, code string) (subDivs.District, error) {
 	district := subDivs.District{}
 
 	table := "districts"
-	fields := "code, name, population, super_code"
+	fields := "code, name, area, super_code"
 	condition := fmt.Sprintf("WHERE	code = '%s'", code)
 	query := fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)
 
@@ -264,7 +268,8 @@ func GetDistrictByCode(db *sql.DB, code string) (subDivs.District, error) {
 	}
 
 	if results.Next() {
-		err = results.Scan(&district.Code, &district.Name, &district.Population, &district.SuperCode)
+		err = results.Scan(&district.Code, &district.Name, &district.Area, &district.SuperCode)
+		district.Population, _ = getPopulationBySubdivisionCode(db, district.Code)
 		if err != nil {
 			log.Println("Error: ", err.Error())
 			return district, err
@@ -281,7 +286,7 @@ func GetWardByCode(db *sql.DB, code string) (subDivs.Ward, error) {
 	ward := subDivs.Ward{}
 
 	table := "wards"
-	fields := "code, name, population, super_code"
+	fields := "code, name, area, super_code"
 	condition := fmt.Sprintf("WHERE	code = '%s'", code)
 	query := fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)
 
@@ -293,7 +298,8 @@ func GetWardByCode(db *sql.DB, code string) (subDivs.Ward, error) {
 	}
 
 	if results.Next() {
-		err = results.Scan(&ward.Code, &ward.Name, &ward.Population, &ward.SuperCode)
+		err = results.Scan(&ward.Code, &ward.Name, &ward.Area, &ward.SuperCode)
+		ward.Population, _ = getPopulationBySubdivisionCode(db, ward.Code)
 		if err != nil {
 			log.Println("Error: ", err.Error())
 			return ward, err
@@ -304,19 +310,4 @@ func GetWardByCode(db *sql.DB, code string) (subDivs.Ward, error) {
 
 	results.Close()
 	return ward, nil
-}
-
-func getLevelFromSubdivisionName(name string, code string) subDivs.SubdivisionLevel {
-	levelNames := []string{"Tỉnh", "Thành phố", "Quận", "Huyện", "Thị xã", "Thị trấn", "Xã", "Phường"}
-	levelNumber := map[int]uint8{5: 1, 3: 2, 2: 1}
-
-	level := subDivs.SubdivisionLevel{Name: "", Number: 0}
-	for _, v := range levelNames {
-		if strings.HasPrefix(name, v) {
-			level.Name = v
-			level.Number = levelNumber[len(code)]
-			return level
-		}
-	}
-	return level
 }

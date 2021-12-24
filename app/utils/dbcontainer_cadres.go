@@ -55,8 +55,6 @@ func GetCadreListBySuperCode(db *sql.DB, superCode string, page int, limit int, 
 		codeSearch += " AND code LIKE '%" + lowerWord + "%' "
 		nameSearch += " AND LOWER(name) LIKE BINARY '%" + lowerWord + "%' "
 	}
-	// condition := fmt.Sprintf("WHERE super_code = '%s' LIMIT %d OFFSET %d",
-	// 	superCode, limit, offset)
 	condition := fmt.Sprintf("WHERE super_code = '%s' and ((%s) or (%s)) LIMIT %d OFFSET %d",
 		superCode, nameSearch, codeSearch, limit, offset)
 	query := fmt.Sprintf("SELECT %s FROM %s %s", fields, table, condition)

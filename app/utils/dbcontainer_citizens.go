@@ -18,16 +18,16 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 		date_of_birth, age, weight, date_of_joining, religion, avatar`
 	offset := (page - 1) * limit
 
-	var code string
+	var codeName string
 	switch len(cadreCode) {
 	case 2:
-		code = "province_code"
+		codeName = "province_code"
 	case 3:
-		code = "district_code"
+		codeName = "district_code"
 	default:
-		code = "ward_code"
+		codeName = "ward_code"
 	}
-	condition := fmt.Sprintf("WHERE %s = '%s'", code, cadreCode)
+	condition := fmt.Sprintf("WHERE %s = '%s'", codeName, cadreCode)
 	query := fmt.Sprintf("SELECT %s FROM %s %s LIMIT %d OFFSET %d", fields, table, condition, limit, offset)
 
 	log.Println(query)

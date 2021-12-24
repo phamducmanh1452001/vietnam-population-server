@@ -10,4 +10,5 @@ type Province struct {
 	Code       string           `json:"code"`
 	Population uint32           `json:"population"`
 	Level      SubdivisionLevel `json:"level"`
+	Area       float64          `json:"area"`
 }
