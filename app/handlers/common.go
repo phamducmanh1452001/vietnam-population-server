@@ -3,7 +3,9 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
+	"os/exec"
 	"strconv"
 	"strings"
 	"time"
@@ -82,6 +84,11 @@ func respondJSON(w *router.ResponseWriter, status int, payload interface{}) {
 }
 
 func respondError(w *router.ResponseWriter, code int, message string) {
+	if strings.HasPrefix(message, "commands out of sync") {
+		cmd := exec.Command("service", "vietnam-population", "restart")
+		stdout, _ := cmd.Output()
+		fmt.Println(string(stdout))
+	}
 	respondJSON(w, code, map[string]string{"error": message})
 }
 

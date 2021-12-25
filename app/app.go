@@ -60,6 +60,7 @@ func (a *App) setRouters() {
 	a.Router.Add("/api/lower-cadres", handlers.IsAuthorized(a.handleRequest(handlers.GetLowerCadreListByCode)))
 	a.Router.Add("/api/citizens", handlers.IsAuthorized(a.handleRequest(handlers.GetCitizenList)))
 	a.Router.Add("/api/change-cadre-permission", a.handleRequest(handlers.ChangeCadrePermisson))
+	a.Router.Add("/api/add-citizen", handlers.IsAuthorized(a.handleRequest(handlers.AddCitizen)))
 
 	a.Router.Add("/api/upload", handlers.UploadImage)
 	a.Router.Add("/api/images", handlers.DownloadImage)

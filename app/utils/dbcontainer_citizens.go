@@ -72,3 +72,30 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 
 	return citizenList, amount, nil
 }
+
+func AddCitizen(db *sql.DB, citizen citizen.Citizen, wardCode string) error {
+	ward, err := GetWardByCode(db, wardCode)
+	if err != nil {
+		return err
+	}
+	district, err := GetDistrictByCode(db, ward.SuperCode)
+	if err != nil {
+		return err
+	}
+
+	table := "citizens"
+	fields := `code, first_name, middle_name, last_name, gender, date_of_birth, age,
+		weight, date_of_joining, religion, avatar, collaborator_name, collaborator_phone, 
+		ward_code, district_code, province_code`
+	values := fmt.Sprintf(`'%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', 
+		'%s', '%s', '%s', '%s', '%s', '%s'`,
+		citizen.Code, citizen.FirstName, citizen.MiddleName, citizen.LastName,
+		citizen.Gender, citizen.DateOfBirth, citizen.Age, citizen.Weight, citizen.DateOfJoining,
+		citizen.Religion, citizen.Avatar, citizen.CollaboratorName, citizen.CollaboratorPhone,
+		wardCode, district.Code, district.SuperCode)
+
+	query := fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s)", table, fields, values)
+	log.Println(query)
+	_, err = db.Query(query)
+	return err
+}
