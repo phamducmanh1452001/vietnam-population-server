@@ -70,6 +70,36 @@ func AddCitizen(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
 	respondJSON(w, 200, citizen)
 }
 
+func DeleteCitizen(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
+	claims, err := getClaims(r)
+	if err != nil {
+		respondError(w, unauthorizedStatus.number, err.Error())
+		return
+	}
+	code, err := getParam(r, "code")
+	if err != nil {
+		respondError(w, badRequestStatus.number, err.Error())
+		return
+	}
+	cadreCode := fmt.Sprintf("%v", claims["code"])
+	isWardCadre := len(cadreCode) == 5
+
+	if !isWardCadre {
+		errStr := "Only ward cadre can delete citizen"
+		respondError(w, internalErrorStatus.number, errStr)
+		return
+	}
+
+	err = utils.DeleteCitizen(db, code, cadreCode)
+	if err != nil {
+		respondError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	respondJSON(w, http.StatusOK, map[string]string{
+		"message": "delete citizen successfully",
+	})
+}
+
 func citizenFromPostForm(r *http.Request) (models.Citizen, error) {
 	citizen := models.Citizen{}
 	var err error

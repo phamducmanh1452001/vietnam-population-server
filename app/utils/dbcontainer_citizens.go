@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	citizen "vietnam-population-server/app/models/citizen"
@@ -18,7 +19,21 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 	fields := `code, first_name, middle_name, last_name, gender, date_of_birth, age,
 		date_of_joining, religion_id, avatar, collaborator_name, collaborator_phone, temporary_address, major`
 	offset := (page - 1) * limit
-
+	codeSearch := " true "
+	firstNameSearch := " true "
+	lastNameSearch := " true "
+	middleNameSearch := " true "
+	words := getSearchKeyArray(key)
+	for _, word := range words {
+		if word == "" {
+			continue
+		}
+		lowerWord := strings.ToLower(word)
+		codeSearch += " AND code LIKE '%" + lowerWord + "%' "
+		firstNameSearch += " AND LOWER(first_name) LIKE BINARY '%" + lowerWord + "%' "
+		lastNameSearch += " AND LOWER(last_name) LIKE BINARY '%" + lowerWord + "%' "
+		middleNameSearch += " AND LOWER(last_name) LIKE BINARY '%" + lowerWord + "%' "
+	}
 	var codeName string
 	switch len(cadreCode) {
 	case 2:
@@ -28,8 +43,10 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 	default:
 		codeName = "ward_code"
 	}
-	condition := fmt.Sprintf("WHERE %s = '%s'", codeName, cadreCode)
-	query := fmt.Sprintf("SELECT %s FROM %s %s LIMIT %d OFFSET %d", fields, table, condition, limit, offset)
+	condition := fmt.Sprintf("WHERE %s = '%s' and ((%s) or (%s) or (%s) or (%s))",
+		codeName, cadreCode, codeSearch, firstNameSearch, lastNameSearch, middleNameSearch)
+	query := fmt.Sprintf("SELECT %s FROM %s %s LIMIT %d OFFSET %d",
+		fields, table, condition, limit, offset)
 
 	log.Println(query)
 	results, err := db.Query(query)
@@ -110,6 +127,48 @@ func AddCitizen(db *sql.DB, citizen citizen.Citizen, wardCode string) error {
 	log.Println(query)
 	_, err = db.Query(query)
 	return err
+}
+
+func DeleteCitizen(db *sql.DB, code string, cadreCode string) error {
+	isHas, err := isHasCitizen(db, code, cadreCode)
+	if err != nil {
+		return err
+	}
+	if !isHas {
+		return errors.New("this citizen code is not exist in your subdivision")
+	}
+	query := fmt.Sprintf("DELETE FROM citizens WHERE code = '%s'", code)
+	_, err = db.Query(query)
+	return err
+}
+
+func isHasCitizen(db *sql.DB, code string, cadreCode string) (bool, error) {
+	isHas := false
+	provinceCode := ""
+	districtCode := ""
+	wardCode := ""
+
+	table := "citizens"
+	fields := `province_code, district_code, ward_code`
+	query := fmt.Sprintf("SELECT %s FROM %s WHERE code = '%s'", fields, table, code)
+
+	log.Println(query)
+	results, err := db.Query(query)
+	if err != nil {
+		return isHas, err
+	}
+	if results.Next() {
+		err = results.Scan(&provinceCode, &districtCode, &wardCode)
+		if err != nil {
+			return isHas, err
+		}
+	} else {
+		return isHas, errors.New("This citizen code is not exist")
+	}
+	results.Close()
+
+	isHas = (wardCode == cadreCode || provinceCode == cadreCode || districtCode == wardCode)
+	return isHas, nil
 }
 
 func getAgeFromBirthDay(date string) int {

@@ -47,6 +47,7 @@ type CitizenListResponse struct {
 
 type CadreListResponse struct {
 	Area       string          `json:"area"`
+	Permission int             `json:"permission"`
 	Amount     int             `json:"amount"`
 	Population uint32          `json:"population"`
 	Data       []CadreResponse `json:"data"`

@@ -98,7 +98,12 @@ func GetLowerCadreListByCode(db *sql.DB, w *router.ResponseWriter, r *http.Reque
 		}
 	}
 
+	permission, err := utils.GetCadrePermissionByCode(db, code)
+	if err != nil {
+		respondError(w, internalErrorStatus.number, err.Error()+"flagqweu")
+	}
 	cadreListResponse = CadreListResponse{
+		Permission: permission,
 		Area:       area,
 		Amount:     amount,
 		Population: population,
