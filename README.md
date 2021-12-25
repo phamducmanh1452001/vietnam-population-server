@@ -42,44 +42,48 @@ Content-Type: application/x-www-form-urlencoded<br />
 Upload ảnh: (nên nén data ảnh <= 500KB)<br />
 POST https://www.phorifai.xyz/api/upload <br />
 Content-Type: multipart/form-data<br />
-{
-    image: {Data}
-}
+{<br />
+    image: {Data}<br />
+}<br />
 
-Download ảnh:
+Download ảnh:<br />
 GET http://www.phorifai.xyz/api/images?name={string}
-
+<br />
 Ví dụ: http://www.phorifai.xyz/api/images?name=avatar1757368390.png
-
-Thêm công dân:
-POST https://www.phorifai.xyz/api/add-citizen
+<br />
+Thêm công dân:<br />
+POST https://www.phorifai.xyz/api/add-citizen<br />
 Authorization: Bearer "YOUR_TOKEN" <br />
-{
-    "code": "808222771",
-    "first_name": "B",
-    "middle_name": "Van",
-    "last_name": "Pham",
-    "gender": "M",
-    "date_of_birth": "2001-01-01",
-    "date_of_joining": "2021-02-22",
-    "religion_id": 1,
-    "avatar": "",
-    "collaborator_name": "Quach Tinh",
-    "collaborator_phone": "0912345678"
-    "major": "Nghề nghiệp"
-    "temporary_address": "Địa chỉ tạm trú"
-}
+{<br />
+    "code": "808222771",<br />
+    "first_name": "B",<br />
+    "middle_name": "Van",<br />
+    "last_name": "Pham",<br />
+    "gender": "M",<br />
+    "date_of_birth": "2001-01-01",<br />
+    "date_of_joining": "2021-02-22",<br />
+    "religion_id": 1,<br />
+    "avatar": "",<br />
+    "collaborator_name": "Quach Tinh",<br />
+    "collaborator_phone": "0912345678"<br />
+    "major": "Nghề nghiệp"<br />
+    "temporary_address": "Địa chỉ tạm trú"<br />
+}<br />
 
-ID tôn giáo
-0: Không
-1: Phật giáo
-2: Công giáo
-3: Hồi giáo
-4: Tin Lành
-5: Cao Đài
-6: Tôn giáo dân gian
-7: Hòa Hảo
-8: Khác
+Xóa Công dân:<br />
+DELETE https://www.phorifai.xyz/api/delete-citizen?code={string}<br />
+Authorization: Bearer "YOUR_TOKEN" <br />
+<br />
+ID tôn giáo<br />
+0: Không<br />
+1: Phật giáo<br />
+2: Công giáo<br />
+3: Hồi giáo<br />
+4: Tin Lành<br />
+5: Cao Đài<br />
+6: Tôn giáo dân gian<br />
+7: Hòa Hảo<br />
+8: Khác<br />
 <br />
 Lấy số liệu thống kê (code là mã khu vực tỉnh, huyện, xã, không truyền code nếu lấy cả nước)<br />
 GET https://www.phorifai.xyz/api/age-chart?code=01<br />
