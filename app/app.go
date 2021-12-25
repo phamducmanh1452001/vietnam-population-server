@@ -64,6 +64,10 @@ func (a *App) setRouters() {
 
 	a.Router.Add("/api/upload", handlers.UploadImage)
 	a.Router.Add("/api/images", handlers.DownloadImage)
+
+	a.Router.Add("/api/age-chart", a.handleRequest(handlers.GetAgeChart))
+	a.Router.Add("/api/gender-chart", a.handleRequest(handlers.GetGenderChart))
+	a.Router.Add("/api/religion-chart", a.handleRequest(handlers.GetReligionChart))
 }
 
 func homePage(w *router.ResponseWriter, r *http.Request) {

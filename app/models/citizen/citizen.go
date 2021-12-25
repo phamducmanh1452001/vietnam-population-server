@@ -10,7 +10,7 @@ type Citizen struct {
 	DateOfBirth   string `json:"date_of_birth"`
 	Age           int    `json:"age"`
 	DateOfJoining string `json:"date_of_joining"`
-	Religion      string `json:"religion"`
+	ReligionId    int    `json:"religion_id"`
 	Avatar        string `json:"avatar"`
 
 	CollaboratorName  string `json:"collaborator_name"`

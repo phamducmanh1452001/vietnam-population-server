@@ -16,7 +16,7 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 
 	table := "citizens"
 	fields := `code, first_name, middle_name, last_name, gender, date_of_birth, age,
-		date_of_joining, religion, avatar, collaborator_name, collaborator_phone, 
+		date_of_joining, religion_id, avatar, collaborator_name, collaborator_phone, 
 		ward_code, district_code, province_code, temporary_address, major`
 	offset := (page - 1) * limit
 
@@ -45,8 +45,8 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 	for results.Next() {
 		err = results.Scan(&citizen.Code, &citizen.FirstName, &citizen.MiddleName, &citizen.LastName,
 			&citizen.Gender, &citizen.DateOfBirth, &citizen.Age,
-			&citizen.DateOfJoining, &citizen.Religion, &citizen.Avatar, &citizen.CollaboratorName,
-			&citizen.CollaboratorName, &citizen.CollaboratorPhone, &citizen.Religion)
+			&citizen.DateOfJoining, &citizen.ReligionId, &citizen.Avatar, &citizen.CollaboratorName,
+			&citizen.CollaboratorName, &citizen.CollaboratorPhone, &citizen.Major)
 		if err != nil {
 			return citizenList, 0, errors.New("cannot scan result from database")
 		}
@@ -85,25 +85,25 @@ func AddCitizen(db *sql.DB, citizen citizen.Citizen, wardCode string) error {
 
 	table := "citizens"
 	fields := `code, first_name, middle_name, last_name, gender, date_of_birth, age,
-		date_of_joining, religion, avatar, collaborator_name, collaborator_phone, 
+		date_of_joining, religion_id, avatar, collaborator_name, collaborator_phone, 
 		ward_code, district_code, province_code, temporary_address, major`
-	values := fmt.Sprintf(`'%s', '%s', '%s', '%s', '%s', '%s', %d, '%s', '%s', 
+	values := fmt.Sprintf(`'%s', '%s', '%s', '%s', '%s', '%s', %d, '%s', %d, 
 		'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s'`,
 		citizen.Code, citizen.FirstName, citizen.MiddleName, citizen.LastName,
 		citizen.Gender, citizen.DateOfBirth, citizen.Age, citizen.DateOfJoining,
-		citizen.Religion, citizen.Avatar, citizen.CollaboratorName, citizen.CollaboratorPhone,
+		citizen.ReligionId, citizen.Avatar, citizen.CollaboratorName, citizen.CollaboratorPhone,
 		wardCode, district.Code, district.SuperCode, citizen.TemporaryAddress, citizen.Major)
 	query := ""
 	if !isCitizenExisted(db, citizen.Code) {
 		query = fmt.Sprintf("INSERT INTO %s (%s) VALUES (%s)", table, fields, values)
 	} else {
 		updateStr := fmt.Sprintf(`code = '%s', first_name = '%s', middle_name = '%s', last_name = '%s', 
-			gender = '%s', date_of_birth = '%s', age = %d, date_of_joining = '%s', religion = '%s', 
+			gender = '%s', date_of_birth = '%s', age = %d, date_of_joining = '%s', religion_id = %d, 
 			avatar = '%s', collaborator_name = '%s', collaborator_phone = '%s', ward_code = '%s', 
 			district_code = '%s', province_code = '%s', temporary_address = '%s', major = '%s'`,
 			citizen.Code, citizen.FirstName, citizen.MiddleName, citizen.LastName,
 			citizen.Gender, citizen.DateOfBirth, citizen.Age, citizen.DateOfJoining,
-			citizen.Religion, citizen.Avatar, citizen.CollaboratorName, citizen.CollaboratorPhone,
+			citizen.ReligionId, citizen.Avatar, citizen.CollaboratorName, citizen.CollaboratorPhone,
 			wardCode, district.Code, district.SuperCode, citizen.TemporaryAddress, citizen.Major)
 		query = fmt.Sprintf("UPDATE citizens SET %s WHERE code = %s", updateStr, citizen.Code)
 	}

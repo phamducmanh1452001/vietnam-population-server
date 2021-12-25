@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"strconv"
 	models "vietnam-population-server/app/models/citizen"
 	"vietnam-population-server/app/router"
 	"vietnam-population-server/app/utils"
@@ -90,9 +91,9 @@ func citizenFromPostForm(r *http.Request) (models.Citizen, error) {
 	citizen.DateOfJoining = form.Get("date_of_joining")
 	citizen.DateOfBirth = form.Get("date_of_birth")
 
-	citizen.Religion = form.Get("religion")
+	citizen.ReligionId, err = strconv.Atoi(form.Get("religion_id"))
 	if err != nil {
-		errString += "\n" + "weight only contains numbers and must not be empty"
+		errString += "\n" + "religion id range: 0 - 8"
 	}
 	citizen.CollaboratorName = form.Get("collaborator_name")
 	citizen.CollaboratorPhone = form.Get("collaborator_phone")

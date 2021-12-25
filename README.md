@@ -62,10 +62,21 @@ Authorization: Bearer "YOUR_TOKEN" <br />
     "gender": "M",
     "date_of_birth": "2001-01-01",
     "date_of_joining": "2021-02-22",
-    "religion": "",
+    "religion_id": 1,
     "avatar": "",
     "collaborator_name": "Quach Tinh",
     "collaborator_phone": "0912345678"
     "major": "Nghề nghiệp"
     "temporary_address": "Địa chỉ tạm trú"
 }
+
+ID tôn giáo
+0: Không
+1: Phật giáo
+2: Công giáo
+3: Hồi giáo
+4: Tin Lành
+5: Cao Đài
+6: Tôn giáo dân gian
+7: Hòa Hảo
+8: Khác
