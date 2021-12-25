@@ -80,3 +80,8 @@ ID tôn giáo
 6: Tôn giáo dân gian
 7: Hòa Hảo
 8: Khác
+<br />
+Lấy số liệu thống kê (code là mã khu vực tỉnh, huyện, xã, không truyền code nếu lấy cả nước)<br />
+GET https://www.phorifai.xyz/api/age-chart?code=01<br />
+GET https://www.phorifai.xyz/api/gender-chart?code=01<br />
+GET https://www.phorifai.xyz/api/religion-chart?code=01<br />
