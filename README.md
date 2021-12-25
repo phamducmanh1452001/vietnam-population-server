@@ -50,3 +50,22 @@ Download ảnh:
 GET http://www.phorifai.xyz/api/images?name={string}
 
 Ví dụ: http://www.phorifai.xyz/api/images?name=avatar1757368390.png
+
+Thêm công dân:
+POST https://www.phorifai.xyz/api/add-citizen
+Authorization: Bearer "YOUR_TOKEN" <br />
+{
+    "code": "808222771",
+    "first_name": "B",
+    "middle_name": "Van",
+    "last_name": "Pham",
+    "gender": "M",
+    "date_of_birth": "2001-01-01",
+    "date_of_joining": "2021-02-22",
+    "religion": "",
+    "avatar": "",
+    "collaborator_name": "Quach Tinh",
+    "collaborator_phone": "0912345678"
+    "major": "Nghề nghiệp"
+    "temporary_address": "Địa chỉ tạm trú"
+}

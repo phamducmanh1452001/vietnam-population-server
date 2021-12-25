@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
-	"strconv"
-	"strings"
 	models "vietnam-population-server/app/models/citizen"
 	"vietnam-population-server/app/router"
 	"vietnam-population-server/app/utils"
@@ -64,9 +62,6 @@ func AddCitizen(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
 	err = utils.AddCitizen(db, citizen, code)
 	if err != nil {
 		errString := err.Error()
-		if strings.Contains(errString, "Duplicate entry") {
-			errString = "This cccd/cmnd is existed"
-		}
 		respondError(w, internalErrorStatus.number, errString)
 		return
 	}
@@ -89,16 +84,13 @@ func citizenFromPostForm(r *http.Request) (models.Citizen, error) {
 	citizen.MiddleName = form.Get("middle_name")
 	citizen.LastName = form.Get("last_name")
 	citizen.Gender = form.Get("gender")
-	citizen.Age, err = strconv.Atoi(form.Get("age"))
-	if err != nil {
-		errString += "\n" + "age only contains numbers and must not be empty"
-	}
+	citizen.Major = form.Get("major")
+	citizen.TemporaryAddress = form.Get("temporary_address")
 	citizen.Avatar = form.Get("avatar")
 	citizen.DateOfJoining = form.Get("date_of_joining")
 	citizen.DateOfBirth = form.Get("date_of_birth")
 
 	citizen.Religion = form.Get("religion")
-	citizen.Weight, err = strconv.Atoi(form.Get("weight"))
 	if err != nil {
 		errString += "\n" + "weight only contains numbers and must not be empty"
 	}
