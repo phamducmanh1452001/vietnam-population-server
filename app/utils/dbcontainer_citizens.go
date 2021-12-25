@@ -16,8 +16,7 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 
 	table := "citizens"
 	fields := `code, first_name, middle_name, last_name, gender, date_of_birth, age,
-		date_of_joining, religion_id, avatar, collaborator_name, collaborator_phone, 
-		ward_code, district_code, province_code, temporary_address, major`
+		date_of_joining, religion_id, avatar, collaborator_name, collaborator_phone, temporary_address, major`
 	offset := (page - 1) * limit
 
 	var codeName string
@@ -36,7 +35,7 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 	results, err := db.Query(query)
 
 	if err != nil {
-		log.Println("Error: ", err.Error())
+		log.Println("Error1: ", err.Error())
 		return citizenList, amount, err
 	}
 
@@ -46,7 +45,7 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 		err = results.Scan(&citizen.Code, &citizen.FirstName, &citizen.MiddleName, &citizen.LastName,
 			&citizen.Gender, &citizen.DateOfBirth, &citizen.Age,
 			&citizen.DateOfJoining, &citizen.ReligionId, &citizen.Avatar, &citizen.CollaboratorName,
-			&citizen.CollaboratorName, &citizen.CollaboratorPhone, &citizen.Major)
+			&citizen.CollaboratorPhone, &citizen.Major, &citizen.Major)
 		if err != nil {
 			return citizenList, 0, errors.New("cannot scan result from database")
 		}
@@ -58,7 +57,7 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 	log.Println(query)
 	results, err = db.Query(query)
 	if err != nil {
-		log.Println("Error: ", err.Error())
+		log.Println("Error2: ", err.Error())
 		return citizenList, amount, err
 	}
 
