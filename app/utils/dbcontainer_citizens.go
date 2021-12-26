@@ -17,7 +17,8 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 
 	table := "citizens"
 	fields := `code, first_name, middle_name, last_name, gender, date_of_birth, age,
-		date_of_joining, religion_id, avatar, collaborator_name, collaborator_phone, temporary_address, major`
+		date_of_joining, religion_id, avatar, collaborator_name, collaborator_phone, temporary_address, major,
+		ward_code, district_code, province_code`
 	offset := (page - 1) * limit
 	codeSearch := " true "
 	firstNameSearch := " true "
@@ -61,14 +62,22 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 
 	citizen := citizen.Citizen{}
 
+	provinceCode := ""
+	wardCode := ""
+	districtCode := ""
 	for results.Next() {
 		err = results.Scan(&citizen.Code, &citizen.FirstName, &citizen.MiddleName, &citizen.LastName,
 			&citizen.Gender, &citizen.DateOfBirth, &citizen.Age,
 			&citizen.DateOfJoining, &citizen.ReligionId, &citizen.Avatar, &citizen.CollaboratorName,
-			&citizen.CollaboratorPhone, &citizen.Major, &citizen.Major)
+			&citizen.CollaboratorPhone, &citizen.Major, &citizen.Major, &wardCode, &districtCode, &provinceCode)
 		if err != nil {
 			return citizenList, 0, errors.New("cannot scan result from database")
 		}
+		province, _ := GetProvinceByCode(db, provinceCode)
+		district, _ := GetProvinceByCode(db, districtCode)
+		ward, _ := GetWardByCode(db, wardCode)
+
+		citizen.Address = fmt.Sprintf("%s, %s, %s", ward.Name, district.Name, province.Name)
 		citizenList = append(citizenList, citizen)
 	}
 	results.Close()

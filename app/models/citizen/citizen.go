@@ -17,5 +17,6 @@ type Citizen struct {
 	CollaboratorPhone string `json:"collaborator_phone"`
 
 	TemporaryAddress string `json:"temporary_address"`
+	Address          string `json:"address"`
 	Major            string `json:"major"`
 }
