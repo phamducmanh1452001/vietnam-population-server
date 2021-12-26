@@ -45,6 +45,9 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 	}
 	condition := fmt.Sprintf("WHERE %s = '%s' and ((%s) or (%s) or (%s) or (%s))",
 		codeName, cadreCode, codeSearch, firstNameSearch, lastNameSearch, middleNameSearch)
+	if cadreCode == "admin" {
+		condition = fmt.Sprintf("WHERE (%s) or (%s) or (%s) or (%s)", codeSearch, firstNameSearch, lastNameSearch, middleNameSearch)
+	}
 	query := fmt.Sprintf("SELECT %s FROM %s %s LIMIT %d OFFSET %d",
 		fields, table, condition, limit, offset)
 
