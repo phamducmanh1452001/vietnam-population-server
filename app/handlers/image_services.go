@@ -28,7 +28,9 @@ func mimeFromIncipit(incipit []byte) string {
 func UploadImage(w *router.ResponseWriter, r *http.Request) {
 	header := w.Writer().Header()
 	header.Add("Access-Control-Allow-Origin", "*")
-	r.ParseMultipartForm(10 << 17)
+	w.WriteHeader(http.StatusOK)
+
+	r.ParseMultipartForm(10 << 16)
 	file, handler, err := r.FormFile("image")
 
 	defer file.Close()
@@ -82,7 +84,9 @@ func DownloadImage(w *router.ResponseWriter, r *http.Request) {
 		respondError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+	header := w.Writer().Header()
+	header.Add("Access-Control-Allow-Origin", "*")
+	header.Set("Content-Type", "image/jpeg")
 	w.WriteHeader(http.StatusOK)
-	w.Writer().Header().Set("Content-Type", "image/jpeg")
 	w.Write(fileBytes)
 }
