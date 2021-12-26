@@ -1,12 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    Hello Hello, Can you hear me !
+    <input type="file" id="avatar">
+    <div id="show-img"></div>
 </body>
+<script>
+    // select file input
+    const input = document.getElementById('avatar');
+
+    // add event listener
+    input.addEventListener('change', () => {
+        uploadFile(input.files[0]);
+    });
+
+    const uploadFile = (file) => {
+
+        // add file to FormData object
+        const fd = new FormData();
+        fd.append('image', file);
+        console.log(fd)
+
+        fetch('https://www.phorifai.xyz/api/upload', {
+                mode: 'no-cors',
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2RlIjoiMDAwNDAiLCJleHAiOjE2NDA1NDEwODN9.JJFDqCnSYrK2G8smGq6Mhom1Ue0lx0WZtB7gSr1OC7c',
+                },
+                body: fd
+            })
+            .then(response => response.opaque())
+            .then(data => {
+                console.log(data);
+                // personal.avatar = img['name'].split('/')[1].toString();
+            })
+
+        // send `POST` request
+        // fetch('/upload-avatar', {
+        //         method: 'POST',
+        //         body: fd
+        //     })
+        //     .then(res => res.json())
+        //     .then(json => console.log(json))
+        //     .catch(err => console.error(err));
+    }
+</script>
+
 </html>

@@ -42,8 +42,10 @@ func (a *App) Run(host string) {
 	if err != nil {
 		log.Fatalln("Cannot open mysql")
 	}
+	// go func() {
+	// 	a.server.Handler = http.FileServer(http.Dir("./static/"))
+	// }()
 
-	a.server.Handler = http.FileServer(http.Dir("./front_end/"))
 	log.Println("Server is running ...")
 
 	log.Fatal(a.server.ListenAndServe())
