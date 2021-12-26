@@ -69,12 +69,12 @@ func GetCitizenListByCadreCode(db *sql.DB, cadreCode string, page int, limit int
 		err = results.Scan(&citizen.Code, &citizen.FirstName, &citizen.MiddleName, &citizen.LastName,
 			&citizen.Gender, &citizen.DateOfBirth, &citizen.Age,
 			&citizen.DateOfJoining, &citizen.ReligionId, &citizen.Avatar, &citizen.CollaboratorName,
-			&citizen.CollaboratorPhone, &citizen.Major, &citizen.Major, &wardCode, &districtCode, &provinceCode)
+			&citizen.CollaboratorPhone, &citizen.TemporaryAddress, &citizen.Major, &wardCode, &districtCode, &provinceCode)
 		if err != nil {
 			return citizenList, 0, errors.New("cannot scan result from database")
 		}
 		province, _ := GetProvinceByCode(db, provinceCode)
-		district, _ := GetProvinceByCode(db, districtCode)
+		district, _ := GetDistrictByCode(db, districtCode)
 		ward, _ := GetWardByCode(db, wardCode)
 
 		citizen.Address = fmt.Sprintf("%s, %s, %s", ward.Name, district.Name, province.Name)
