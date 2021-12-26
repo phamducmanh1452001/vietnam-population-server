@@ -26,6 +26,8 @@ func mimeFromIncipit(incipit []byte) string {
 }
 
 func UploadImage(w *router.ResponseWriter, r *http.Request) {
+	header := w.Writer().Header()
+	header.Add("Access-Control-Allow-Origin", "*")
 	r.ParseMultipartForm(10 << 17)
 	file, handler, err := r.FormFile("image")
 

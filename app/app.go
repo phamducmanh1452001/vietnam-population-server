@@ -2,7 +2,6 @@ package app
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -43,13 +42,15 @@ func (a *App) Run(host string) {
 	if err != nil {
 		log.Fatalln("Cannot open mysql")
 	}
-	log.Printf("Server is running ...")
+
+	a.server.Handler = http.FileServer(http.Dir("./front_end/"))
+	log.Println("Server is running ...")
 
 	log.Fatal(a.server.ListenAndServe())
 }
 
 func (a *App) setRouters() {
-	a.Router.Add("/", homePage)
+	// a.Router.Add("/", homePage)
 	a.Router.Add("/api/provinces", a.handleRequest(handlers.GetProvinceList))
 	a.Router.Add("/api/districts", a.handleRequest(handlers.GetDistrictListByProvinceCode))
 	a.Router.Add("/api/wards", a.handleRequest(handlers.GetWardListByDistrictCode))
@@ -69,10 +70,7 @@ func (a *App) setRouters() {
 	a.Router.Add("/api/age-chart", a.handleRequest(handlers.GetAgeChart))
 	a.Router.Add("/api/gender-chart", a.handleRequest(handlers.GetGenderChart))
 	a.Router.Add("/api/religion-chart", a.handleRequest(handlers.GetReligionChart))
-}
 
-func homePage(w *router.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Home Page")
 }
 
 func (a *App) handleRequest(handler Handle) func(w *router.ResponseWriter, r *http.Request) {
