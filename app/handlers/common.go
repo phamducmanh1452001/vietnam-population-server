@@ -64,7 +64,8 @@ type CadreResponse struct {
 }
 
 type JwtResponse struct {
-	Token string `json:"token"`
+	Token      string `json:"token"`
+	Permission int    `json:"permission"`
 }
 
 func respondJSON(w *router.ResponseWriter, status int, payload interface{}) {

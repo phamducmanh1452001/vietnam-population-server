@@ -33,8 +33,12 @@ func Login(db *sql.DB, w *router.ResponseWriter, r *http.Request) {
 		respondError(w, notImplementedStatus.number, notImplementedStatus.description)
 		return
 	}
-
-	jwtResponse := JwtResponse{Token: tokenString}
+	permission, err := utils.GetCadrePermissionByCode(db, code)
+	if err != nil {
+		respondError(w, notImplementedStatus.number, "Error when get permission")
+		return
+	}
+	jwtResponse := JwtResponse{Token: tokenString, Permission: permission}
 	respondJSON(w, http.StatusOK, jwtResponse)
 }
 
