@@ -23,6 +23,7 @@ func GetLowerCadreListByCode(db *sql.DB, w *router.ResponseWriter, r *http.Reque
 
 	provinceCodeLen := 2
 	districtCodeLen := 3
+	adminCodeLen := 5
 
 	var subdivision interface{}
 	var population uint32 = 0
@@ -85,6 +86,35 @@ func GetLowerCadreListByCode(db *sql.DB, w *router.ResponseWriter, r *http.Reque
 
 		for i, cadre := range cadreList {
 			subdivision = wardList[i]
+			cadreResponse := CadreResponse{
+				Name:        cadre.Name.String,
+				Code:        cadre.Code,
+				Age:         uint8(cadre.Age.Int16),
+				Phone:       cadre.Phone.String,
+				Email:       cadre.Email.String,
+				Permission:  uint8(cadre.Permission),
+				Subdivision: subdivision,
+			}
+			cadreResponseArray = append(cadreResponseArray, cadreResponse)
+		}
+	case adminCodeLen:
+		provinceList, v1, cnt := utils.GetProvinceList(db, page, limit, searchKey)
+		amount = cnt
+		if v1 == utils.ErrorFlag {
+			respondError(w, internalErrorStatus.number, "Database error1")
+			return
+		}
+		population = uint32(v1)
+		area = "Việt Nam"
+
+		if len(cadreList) != len(provinceList) {
+			fmt.Println(len(cadreList), " ", len(provinceList))
+			respondError(w, internalErrorStatus.number, "Database error2")
+			return
+		}
+
+		for i, cadre := range cadreList {
+			subdivision = provinceList[i]
 			cadreResponse := CadreResponse{
 				Name:        cadre.Name.String,
 				Code:        cadre.Code,
