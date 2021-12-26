@@ -32,7 +32,7 @@ func UploadImage(w *router.ResponseWriter, r *http.Request) {
 	defer file.Close()
 
 	if err != nil {
-		respondError(w, 500, "Error Retrieving the File: "+err.Error())
+		respondError(w, http.StatusForbidden, "Error Retrieving the File: "+err.Error())
 		return
 	}
 
@@ -52,7 +52,7 @@ func UploadImage(w *router.ResponseWriter, r *http.Request) {
 	mime := mimeFromIncipit(fileBytes)
 
 	if mime == "" {
-		respondError(w, 500, "Error extension of image file")
+		respondError(w, http.StatusNotFound, "Error extension of image file")
 		return
 	}
 
