@@ -1,0 +1,12 @@
+.province-all{
+    position: relative;
+}
+.search-province{
+    position: absolute;
+    right: 0;
+    top: -35px;
+}
+.province-population{
+    font-size: 1.3rem;
+    font-weight: 600;
+}

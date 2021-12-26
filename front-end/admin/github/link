@@ -1,0 +1,7 @@
+https://github.com/phamducmanh1452001/vietnam-population-server?fbclid=IwAR3karI3bFjeJjB205dY3fbR3ethuVHwVoT_b8EFGU8fZlZbrOKuJ4mLhVQ
+
+login
+https://www.phorifai.xyz/api/login
+
+lấy danh sách cấp dưới
+https://www.phorifai.xyz/api/lower-cadres&page=1&limit=10&key={string}

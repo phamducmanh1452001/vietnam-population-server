@@ -1,0 +1,546 @@
+{
+    "area": "Thành phố Hà Nội",
+    "amount": 30,
+    "population": 1000,
+    "data": [{
+            "name": "Cán Bộ Quận Ba Đình",
+            "code": "001",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Ba Đình",
+                "code": "001",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Hoàn Kiếm",
+            "code": "002",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Hoàn Kiếm",
+                "code": "002",
+                "super_code": "01",
+                "population": 1000,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Tây Hồ",
+            "code": "003",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Tây Hồ",
+                "code": "003",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Long Biên",
+            "code": "004",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Long Biên",
+                "code": "004",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Cầu Giấy",
+            "code": "005",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Cầu Giấy",
+                "code": "005",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Đống Đa",
+            "code": "006",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Đống Đa",
+                "code": "006",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Hai Bà Trưng",
+            "code": "007",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Hai Bà Trưng",
+                "code": "007",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Hoàng Mai",
+            "code": "008",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Hoàng Mai",
+                "code": "008",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Thanh Xuân",
+            "code": "009",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Thanh Xuân",
+                "code": "009",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Sóc Sơn",
+            "code": "016",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Sóc Sơn",
+                "code": "016",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Đông Anh",
+            "code": "017",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Đông Anh",
+                "code": "017",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Gia Lâm",
+            "code": "018",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Gia Lâm",
+                "code": "018",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Nam Từ Liêm",
+            "code": "019",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Nam Từ Liêm",
+                "code": "019",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Thanh Trì",
+            "code": "020",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Thanh Trì",
+                "code": "020",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Bắc Từ Liêm",
+            "code": "021",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Bắc Từ Liêm",
+                "code": "021",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Mê Linh",
+            "code": "250",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Mê Linh",
+                "code": "250",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Quận Hà Đông",
+            "code": "268",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Quận Hà Đông",
+                "code": "268",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Quận",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Thị xã Sơn Tây",
+            "code": "269",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Thị xã Sơn Tây",
+                "code": "269",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Thị xã",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Ba Vì",
+            "code": "271",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Ba Vì",
+                "code": "271",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Phúc Thọ",
+            "code": "272",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Phúc Thọ",
+                "code": "272",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Đan Phượng",
+            "code": "273",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Đan Phượng",
+                "code": "273",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Hoài Đức",
+            "code": "274",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Hoài Đức",
+                "code": "274",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Quốc Oai",
+            "code": "275",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Quốc Oai",
+                "code": "275",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Thạch Thất",
+            "code": "276",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Thạch Thất",
+                "code": "276",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Chương Mỹ",
+            "code": "277",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Chương Mỹ",
+                "code": "277",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Thanh Oai",
+            "code": "278",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Thanh Oai",
+                "code": "278",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Thường Tín",
+            "code": "279",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Thường Tín",
+                "code": "279",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Phú Xuyên",
+            "code": "280",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Phú Xuyên",
+                "code": "280",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Ứng Hòa",
+            "code": "281",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Ứng Hòa",
+                "code": "281",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        },
+        {
+            "name": "Cán Bộ Huyện Mỹ Đức",
+            "code": "282",
+            "age": 0,
+            "phone": "",
+            "email": "",
+            "permission": 1,
+            "subdivision": {
+                "name": "Huyện Mỹ Đức",
+                "code": "282",
+                "super_code": "01",
+                "population": 0,
+                "level": {
+                    "name": "Huyện",
+                    "number": 2
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,66 @@
+<!-- Phần html hiện ra khi ấn vào tên tỉnh thành -->
+<div id="district-detail">
+    <div class="inner-text title" id="populationProvince">
+        <span>Tổng dân số <span class="areaName"></span></span><br>
+        <span class="areaPopulation"></span>
+    </div>
+    <div class="margin30 row">
+        <div class="col-md-5">
+            <img src="/main/img/bando.jpg" alt="" style="width: 100%; height: 80%;">
+        </div>
+        <div class="col-md-6 province-population">
+            <span>Dân số <span class="areaName"></span> đang là <span class="areaPopulation"></span> người</span><br>
+            <span >Chiếm <i id="percentPopulation"></i>% dân số <span id="superCodeName">Việt Nam</span></span><br>
+            <span>Đứng vị trí thứ 4 trong danh sách các tỉnh về dân số</span><br>
+            <span>Tổng diện tích đất là: <span id="area"></span>km<sup>2</sup></span><br>
+            <span>Mật độ dân số của <span class="areaName"></span> là <span id="density"></span> người/km <sup>2</sup></span><br>
+            <span>Độ tuổi trung bình: 37 </span><br>
+            <span>Dân thành thị chiếm 17.1%</span><br>
+            <span>Tỷ lệ nam giới: <span class="percentMale"></span>%</span>
+        </div>
+    </div>    
+</div>
+<div class="row margin30">
+    <div class="col-md-6" id="chartReligion">
+        <canvas id="chartreligion" class="chart" ></canvas>
+    </div>
+    <div class="col-md-6" id="chartAge">
+        <canvas id="myCharty" class="chart" ></canvas>
+    </div>                        
+</div>
+<div class="row margin30">
+    <div class="col-md-12">
+        <canvas id="chart_age"></canvas>
+    </div>
+</div>
+
+<div class="inner-text">
+    <span class="title">Bảng thống kê dân số các <span class="levelName">phường, xã</span> thuộc <span class="areaName"></span> </span><br>
+</div>
+<div class="province-all margin40">
+    <div class="search-province">
+        <span class="top-rank">Tìm kiếm: </span><input type="text" id="search-district">
+    </div>
+    <div>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Tỉnh thành</th>
+                <th>Dân số</th>
+                <th>Diện tích</th>
+                <th>Mật độ</th>
+                <th>Tuổi trung bình</th>
+                <th>% giới tính nam</th>
+                <th>% giới tính nữ</th>
+                <th>% thành thị</th>
+                <th>Dân thành thị</th>
+            </tr>
+            </thead>
+            <tbody id="districtAll-table" >
+            </tbody>
+        </table>        
+    </div>
+</div>
+<script src="/main/js/chartPopulation.js"></script>
+<script src="/main/js/province.js"></script>
+<script src="/public/js/chart2.5.js"></script>

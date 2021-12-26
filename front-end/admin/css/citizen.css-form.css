@@ -1,0 +1,45 @@
+#myModal label {
+    font-weight: bold;
+}
+
+table span .fa-minus-circle {
+    color: rgb(221, 49, 49);
+}
+
+table span .fa-edit {
+    color: rgb(90, 90, 172);
+}
+
+table span {
+    color: black
+}
+
+table tr td:nth-child(2):hover {
+    text-decoration: underline;
+}
+
+table span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+table tr:hover {
+    cursor: pointer;
+    background-color: rgb(228, 220, 220);
+}
+
+#show-info-detail {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 100px;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 400px;
+    overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}

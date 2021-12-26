@@ -1,0 +1,289 @@
+<link rel="stylesheet" href="./css/citizen.css-form.css" />
+
+<!-- display personal information -->
+<div class="card shadow mb-1 d-none" id="show-info-detail">
+    <h6 style="padding: 5px 20px" class="text-primary font-weight-bold">Thông tin chi tiết</h6>
+    <div class="card-header py-3">
+
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách công dân</h6>
+        <div class="col-12 pl-0 pt-3 flex-column">
+            <select id="province" class="browser-default custom-select w-auto">
+                <option value="" style="display: none">Chọn tỉnh/thành phố</option>
+            </select>
+            <select id="district" class="browser-default custom-select w-auto">
+                <option value="" style="display: none">Chọn quận/huyện</option>
+            </select>
+            <select id="ward" class="browser-default custom-select w-auto">
+                <option value="" style="display: none">Chọn phường/xã</option>
+            </select>
+            <form class="d-none d-sm-inline-block form-inline mr-auto my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="text" name="search" id="search" class="form-control border-0 small"
+                        style="background-color: rgb(204, 200, 200);" placeholder="Tìm kiếm theo mã..."
+                        aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" id="btn-search">
+                            Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <button id="add-citizen" class="btn btn-success mt-2" data-toggle="modal" data-target="#myModal"><i
+                class="fas fa-user-plus"></i> Thêm công dân</button>
+        <!-- <div>
+            <button id="add-collaborator" class="btn btn-success mt-2" data-toggle="modal" data-target="#myModal1"><i
+                    class="fas fa-user-friends"></i> Thêm cộng tác viên</button>
+        </div> -->
+        <div class="mt-3 d-flex">
+            <div>
+                <span>Trang: </span>
+                <select name="pages" id="page-number" class="border border-secondary">
+                    <!-- <option value="1">1</option> -->
+                    <!-- <option value="2">2</option> -->
+                </select>
+            </div>
+            <div class="ml-5">
+                <span>Số lượng hiển thị: </span>
+                <select name="data_tables" id="data_tables" class="border border-secondary">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="500">500</option>
+                </select>
+            </div>
+            <div class="ml-5">
+                <span id="total_citizen" class="font-weight-bold"></span>
+            </div>
+        </div>
+        <div class="card-body p-0 pt-3">
+            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã số</th>
+                            <th>Họ tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Giới tính</th>
+                            <th>Ngày tham gia</th>
+                            <th>Nghề nghiệp</th>
+                            <th class="d-none">Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Mã số</th>
+                            <th>Họ tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Giới tính</th>
+                            <th>Ngày tham gia</th>
+                            <th>Nghề nghiệp</th>
+                            <th class="d-none">Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <!-- <tr>
+                            <td>100010</td>
+                            <td>Lê Văn Hiếu Trung</td>
+                            <td>25-12-2001</td>
+                            <td>Nam</td>
+                            <td>Định Bình - Yên Định - Thanh Hoá</td>
+                            <td>Không</td>
+                            <td class="d-flex justify-content-between">
+                                <span><i class="fas fa-minus-circle"></i>Delete</span>
+                                <span data-toggle="modal" data-target="#myModal"><i class="far fw fa-edit"></i>Edit</span>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- The Modal - Add citizen -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header d-flex flex-column">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Điền thông tin công dân vào form sau đây</h4>
+                <i style="color: rgb(231, 128, 128);">(*Bạn cần phải điền đầy đủ thông tin)</i>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="form-1" role="form" data-toggle="validator" style="display: flex; flex-direction: column">
+                    <div style="display: flex; justify-content: space-between;">
+
+                        <div class="d-flex justify-content-between">
+                            <div class="form-group">
+                                <label for="first_name">Họ</label>
+                                <input type="text" class="form-control" id="first_name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="middle_name">Tên đệm</label>
+                                <input type="text " class="form-control" id="middle_name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">Tên cuối</label>
+                                <input type="text" class="form-control" id="last_name" required>
+                            </div>
+                        </div>
+
+                        <div style="width: 40%; display: flex; justify-content: space-evenly;">
+                            <div class="form-group">
+                                <label for="gender">Giới tính</label>
+                                <select name="gender" id="gender" class="browser-default custom-select w-auto d-block">
+                                    <option value="female">Nữ</option>
+                                    <option value="male">Nam</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="width: 60%;">
+                                <label for="dob">Ngày sinh</label>
+                                <input type="date" class="form-control" name="dob" id="dob" required>
+
+                                <!-- Error -->
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex flex-row">
+                        <div>
+                            <label>Địa chỉ tạm trú</label>
+                            <div>
+                                <select id="province1" class="browser-default custom-select w-auto"
+                                    onchange="province_change_1()">
+                                    <option value="" style="display: none">Chọn tỉnh/thành phố</option>
+                                </select>
+                                <select id="district1" class="browser-default custom-select w-auto"
+                                    onchange="district_change_1()">
+                                    <option value="" style="display: none">Chọn quận/huyện</option>
+                                </select>
+                                <select id="ward1" class="browser-default custom-select w-auto">
+                                    <option value="" style="display: none">Chọn phường/xã</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <label for="address">Chỗ ở hiện tại</label>
+                        <input type="text" name="address" id="address" class="form-control" required /> -->
+
+                    <!-- Error -->
+                    <!-- <div class="help-block with-errors"></div>
+                    </div> -->
+
+                    <div class="d-flex">
+                        <div class="form-group">
+                            <label for="weight">Cân nặng</label>
+                            <input type="number" name="weight" id="weight" class="form-control" required />
+
+                            <!-- Error -->
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="form-group ml-4 d-flex flex-column">
+                            <label for="religions">Tôn giáo</label>
+                            <select name="religions" id="religions"
+                                class="browser-default custom-select w-auto d-block">
+                                <option value="0">Không</option>
+                                <option value="1">Phật giáo</option>
+                                <option value="2">Công giáo</option>
+                                <option value="3">Hồi giáo</option>
+                                <option value="4">Tin lành</option>
+                                <option value="5">Cao đài</option>
+                                <option value="6">Tôn giáo nhân gian</option>
+                                <option value="7">Hoà hảo</option>
+                                <option value="8">Khác</option>
+                            </select>
+
+                            <!-- Error -->
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group ml-3 d-flex flex-column">
+                            <label for="major">Nghề nghiệp</label>
+                            <input type="text" class="form-control" id="major" required>
+
+                            <!-- Error -->
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group ml-3 d-flex flex-column">
+                            <label for="collaborator">Là cộng tác viên</label>
+                            <select id="collaborator" class="browser-default custom-select w-auto">
+                                <option value="0">Không</option>
+                                <option value="1">Có</option>
+                            </select>
+
+                            <!-- Error -->
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="descrip-religion">
+                        <label for="religion-detail">Mô tả về tôn giáo</label>
+                        <textarea class="form-control" id="religion-detail"></textarea>
+                    </div>
+
+                    <div id="info-collaborator" class="d-flex justify-content-between">
+                        <div class="form-group w-50">
+                            <label for="collaborator_name">Tên cộng tác viên</label>
+                            <input type="text" class="form-control" id="collaborator_name" required />
+                        </div>
+                        <div class="form-group" style="width: 40%;">
+                            <label for="collaborator_phone">Số điện thoại</label>
+                            <input type="number" class="form-control" id="collaborator_phone" required />
+                        </div>
+                    </div>
+
+                    
+
+                    <div class="form-group d-flex justify-content-between">
+                        <div style="width: 45%;">
+                            <label for="cccd">Số CCCD</label>
+                            <input type="number" class="form-control" id="cccd" placeholder="Gồm 8 hoặc 12 chữ số" required />
+
+                            <!-- Error -->
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div style="width: 40%; padding: 5px;">
+                            <label for="file-portrait">Chọn ảnh chân dung</label>
+                            <input type="file" name="file-portrait" id="file-portrait" accept="image/*"
+                                class="form-control-file h-100 d-block" onchange="getImgData()" required />
+                        </div>
+                        <div id="img-preview" style="width: 200px; padding: 5px;"></div>
+
+                        <!-- Error -->
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" id="btn-add-citizen" class="btn btn-primary btn-block"
+                            data-dismiss="modal">Thêm</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.7.0/validator.min.js"
+    integrity="sha512-rJU+PnS2bHzDCvRGFhXouCSxf4YYaUyUfjXMHsHFfMKhWDIEBr8go2LZ2EYXOqASey1tWc2qToeOCYh9et2aGQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./js/citizen/citizen.check-form.js"></script>
+<script src="./js/citizen/citizen.load-area.js"></script>
+<script src="./js/citizen/citizen.handle-select.js"></script>
+<script src="./js/citizen/citizen.handle-pagination.js"></script>
+<script src="./js/citizen/citizen.handle-select1.js"></script>
+<script src="./js/citizen/citizen.handle-show-image.js"></script>
+<script src="./js/citizen/citizen.handle-search.js"></script>
+<script src="./js/citizen/citizen.add-citizen.js"></script>
+<script src="./js/citizen/citizen.edit-citizen.js"></script>

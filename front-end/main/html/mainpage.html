@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VietNamese Population</title>
+    <link rel="shortcut icon" href="/main/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/main/css/mainpage.css">
+    <link rel="stylesheet" href="/main/css/province.css">
+    <link rel="stylesheet" href="/public/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/iconWeb/css/all.min.css">
+    <script src="/public/jquery/jquery.min.js"></script>
+    <script src="/public/jquery/boostrap4.5.2.min.js"></script>
+    <script src="/main/js/province.js"></script>
+    <script src="/public/js/chart2.5.js"></script>
+</head>
+<body>
+    <div class="all">
+
+    <!-- Header -->
+    <div class="navbar-header">
+        <div id="back"></div>
+        <div class="navbar-container">
+            <div class="navbar-title">
+                <img src="/main/img/Ministry_of_Health_(Vietnam)_Logo.svg.png" alt="">
+                <span>Tổng cục điều tra dân số Việt Nam</span>
+            </div>
+        </div>
+        <div class="btn-header">
+            <div class="declare">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModalDeclare">Mẫu Khai Báo</button>
+            </div>
+            <div class="login">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalLogin">Đăng nhập</button>
+            </div>             
+        </div>   
+    </div>
+
+      <!-- The Modal -->
+    <div class="modal fade" id="myModalLogin">
+        <div class="modal-dialog">
+          <div class="modal-content">         
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div class="modal-header-item">
+                    <span class="modal-title">Đăng Nhập</span><br>
+                    <span class="modal-title-warning">Lưu ý: Chỉ những cán bộ được phân công mới có quyền truy cập.</span>                    
+                </div>
+
+            </div>     
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="modal-body-item">
+                    <div class="modal-body-img">
+                        <a href="/main/html/login.html"><img src="/main/img/dangnhap_chocanbo.svg" alt="">Đăng nhập dành cho cán bộ</a>
+                    </div>                    
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
+          </div>
+        </div>
+      </div>
+        <!--The modal declare  -->
+        <div class="modal fade" id="myModalDeclare">
+            <div class="modal-dialog" id="modalDeclare-dialog">
+              <div class="modal-content">         
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <div class="modal-header-item">
+                        <span class="modal-title">Mẫu Khai Báo Dữ Liệu Dân Cư</span><br>
+                        <span class="modal-title-warning">Click vào ảnh để tải xuống</span>                    
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>     
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="modal-body-item" id="modal-body-declare-item">
+                        <div class="modal-body-img" id="modal-body-declare-img">
+                            <a href="/main/img/khaibao.jpg" download="MauKhaiBao.jpg"><img src="/main/img/khaibao.jpg" alt="" ></a>
+                        </div>                    
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    
+                    <a href="/main/img/khaibao.jpg" download="KhaiBao.jpg"><button class="btn btn-success">Tải xuống</button></a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
+              </div>
+            </div>
+        </div>
+    <!-- Container -->
+    <div class="current-population">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" id="population-container">
+                <div class="inner-text total-population">
+                    <span>Dân số Việt Nam hiện tại</span><br>
+                    <span id="populationCountry"></span>
+                </div>
+                <div class="row margin30">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-4">
+                        <div class="label-counter">
+                            <span>Tháng này</span>
+                        </div>
+                        <div class="sec-box">
+                            <span>Sinh trong tháng này</span><br>
+                            <span>112</span>
+                        </div>
+                        <div class="sec-box">
+                            <span>Mất trong tháng này</span><br>
+                            <span>80</span>
+                        </div>
+                        <div class="sec-box">
+                            <span>Tăng trưởng dân số trong tháng</span><br>
+                            <span>31</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="label-counter">
+                            <span>Năm nay</span>
+                        </div>
+                        <div class="sec-box">
+                            <span>Sinh trong năm nay</span><br>
+                            <span>112</span>
+                        </div>
+                        <div class="sec-box">
+                            <span>Mất trong năm nay</span><br>
+                            <span>80</span>
+                        </div>
+                        <div class="sec-box">
+                            <span>Tăng trưởng dân số trong năm</span><br>
+                            <span>3120</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <!-- Link tới các biểu đồ -->
+                <div class="chart-type row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="label-counter chart-title">Các loại biểu đồ dân số</div>
+                        <div class="row chart-title-item">
+                            <div class="col-md-6 inner-text">
+                                <a href="#myChart3">Biểu đồ giới tính</a><br>
+                                <a href="#myChart1">Biểu đồ dân tộc</a><br>                                
+                                <a href="#mixed-chart">Biểu đồ qua các năm</a><br>
+                                <a href="#myChart2">Biểu đồ thành thị và nông thôn</a>
+                            </div>
+                            <div class="col-md-6 inner-text">
+                                <a href="">Bảng tăng trưởng dân số</a><br>                               
+                                <a href="">Biểu đồ dân số theo tỉnh</a><br>
+                                <a href="#province-item10">Top tỉnh thành dân số cao nhất</a><br>
+                                <a href="#table-striped">Dự đoán dân số trong tương lai</a>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <!-- Top 30 tỉnh thành có số dân cao nhất cả nước -->
+                <div class="top-20">
+                    <div class="top-20-title label-counter margin40">
+                        <span>Top 30 tỉnh thành có dân số cao nhất Việt Nam</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4" id="province-item10"></div>
+                        <div class="col-md-4" id="province-item20"></div>
+                        <div class="col-md-4" id="province-item30"></div>                        
+                    </div>
+                    <p id="all-province">Xem tất cả</p>
+                    <div class="top-20-title label-counter margin40">
+                        <span>Phân tích dân số Việt Nam</span>
+                    </div>
+                    <div class="ananylis row margin30">
+                        <canvas id="mixed-chart" style="width:100%"></canvas>
+                    </div>  
+                    <div class="row">
+                        <div>
+                            Trong năm 2021, dân số của Việt Nam dự kiến sẽ tăng 830.246 người và đạt 98.564.407 người vào đầu năm 2022. Gia tăng dân số tự nhiên được dự báo là dương vì số lượng sinh sẽ nhiều hơn số người chết đến 912.801 người. Nếu tình trạng di cư vẫn ở mức độ như năm trước, dân số sẽ giảm -82.555 người. Điều đó có nghĩa là số người chuyển đến Việt Nam để định cư sẽ ít hơn so với số người rời khỏi đất nước này để định cư ở một nước khác. <br>
+                            Theo ước tính của chúng tôi, tỷ lệ thay đổi dân số hàng ngày của Việt Nam vào năm 2021 sẽ như sau: <br>
+                            + 4.234 trẻ em được sinh ra trung bình mỗi ngày <br>
+                            + 1.733 người chết trung bình mỗi ngày <br><br>
+                            <h5>Phân bố các dân tộc</h5>
+                            <span class="top-rank">a) Dân tộc Việt (Kinh): </span> Dân tộc Kinh phân bố rộng khắp trong cả nước, tập trung nhiều ở các vùng đồng bằng, trung du và ven biển.Hiện đang là dân tộc chiếm dân số lớn nhất nước ta với tỷ lệ lên đến 84% <br>                    
+                            <span class="top-rank">b) Các dân tộc thiểu số khác: </span>  <br>
+                            – Dân tộc ít người. Phân bố chủ yếu ở miền núi và trung du. <br>
+                            – Miền núi và cao nguyên là nơi cư trú của dân tộc ít người. <br>
+                            - Trung du và miền núi Bắc bộ cũng là nơi cư trú của một số dân tộc có số dân lơn hơn 100 người như: Tày(180), Thái(189), Mường(145), H'mông(139), Khmer(131), Nùng(108)...
+                            <h5>Phân bố thành thị và nông thôn</h5>
+                            - Số dân nông thôn luôn chiếm tỷ trọng cao hơn dân thành thị (năm 2020 dân số nông thôn chiếm 63%, dân số thành thị chiếm 37%) <br>
+                            - Nhưng tổng quan trong giai đoạn 2010-2020 tỉ lệ dân nông thôn đang có xu hướng giảm, bên cạnh đó lượng người di cư từ nông thôn lên thành thị đang có xu hướng tăng lên rõ rệt.Đây là sự chuyển dịch theo hướng tích cực, phù hợp với quá trình công nghiệp hóa và hiện đại hóa đắt nước.
+                        </div>
+                  
+
+                    </div>
+                    <div class="row margin30">
+                        <div class="col-md-6">
+                            <canvas id="myChart1" class="chart"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                            <canvas id="myChart2" class="chart" ></canvas>                           
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <h5>Cơ cấu giới tính theo độ tuổi:</h5>
+                        <p>Tính đến cuối năm 2020, tình trạng mất cân bằng giới tính ở Việt Nam đang có xu hướng gia tăng đáng lo ngại. Khi tỷ lệ giới tính nam đang có xu hướng cao hơn giới tính nữ ở mọi độ tuổi.Tỷ lệ giới tính Nam đang là 51.87% bên cạnh đó giới tính nữ là 48.13%. Đây đang là một điều đáng lo ngại do phong tục sinh con trai nối dõi vẫn chưa được xóa bỏ hoàn toàn ở Việt Nam</p>
+                    </div>
+                    <div class="row margin30">
+                        <div class="col-md-12" style="position: relative;">
+                            <div class="total-sex">
+                                <i class="fas fa-venus icon-female"></i><span class="top-rank">Tổng: 48.13%</span><br>  
+                                <i class="fas fa-mars icon-male"></i><span class="top-rank">Tổng: 51.87%</span>                         
+                            </div>
+                            <canvas id="myChart3" style="width:100%"></canvas>
+                        </div>
+                    </div>
+                    <div class="row margin30">
+                        <h5>Bảng dân số Việt Nam 2010-2020</h5>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                                <th>Năm</th>
+                                <th>Dân số</th>
+                                <th>% thay đổi</th>
+                                <th>Thay đổi</th>
+                                <th>Di cư</th>
+                                <th>Tuổi trung bình</th>
+                                <th>% giới tính nam</th>
+                                <th>% giới tính nữ</th>
+                                <th>% thành thị</th>
+                                <th>Dân thành thị</th>
+                                <th>Hạng thế giới</th>
+                              </tr>
+                            </thead>
+                            <tbody id="population-detail">
+                              <tr>
+                                <td>2010</td>
+                                <td>8045</td>
+                                <td>1.1%</td>
+                                <td>80</td>
+                                <td>400</td>
+                                <td>30.2</td>
+                                <td>51.2</td>
+                                <td>48.8</td>
+                                <td>32%</td>
+                                <td>2600</td>
+                                <td>15</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row margin30">
+                        <div>
+                            <h5>Dự báo dân số Việt Nam</h5>
+                            <p>(Dữ liệu được hiệu chỉnh theo phép sinh trung bình, Phòng Kinh tế và Xã hội Liên Hợp Quốc.)</p>                            
+                        </div>
+
+                        <table class="table table-bordered table-striped" id="table-striped">
+                            <thead>
+                              <tr>
+                                <th>Năm</th>
+                                <th>Dân số</th>
+                                <th>% thay đổi</th>
+                                <th>Thay đổi</th>
+                                <th>Di cư</th>
+                                <th>Tuổi trung bình</th>
+                                <th>% giới tính nam</th>
+                                <th>% giới tính nữ</th>
+                                <th>% thành thị</th>
+                                <th>Dân thành thị</th>
+                                <th>Hạng thế giới</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>2025</td>
+                                <td>9733</td>
+                                <td>0.99%</td>
+                                <td>93</td>
+                                <td>8</td>
+                                <td>32.5</td>
+                                <td>51.2</td>
+                                <td>48.8</td>
+                                <td>37.7</td>
+                                <td>3675</td>
+                                <td>15</td>
+                              </tr>
+                              <tr>
+                                  <td>2030</td>
+                                  <td>10416</td>
+                                  <td>0.6</td>
+                                  <td>61</td>
+                                  <td>-88</td>
+                                  <td>36.7</td>
+                                  <td>53.16</td>
+                                  <td>46.84</td>
+                                  <td>45.4</td>
+                                  <td>4724</td>
+                                  <td>16</td>
+                              </tr>
+                              <tr>
+                                  <td>2035</td>
+                                  <td>10629</td>
+                                  <td>0.41</td>
+                                  <td>42</td>
+                                  <td>-8</td>
+                                  <td>38.5</td>
+                                  <td>53.9</td>
+                                  <td>56.1</td>
+                                  <td>49.1</td>
+                                  <td>5221</td>
+                                  <td>16</td>
+                              </tr>
+                              <tr>
+                                  <td>2040</td>
+                                  <td>10779</td>
+                                  <td>0.28</td>
+                                  <td>29</td>
+                                  <td>-8</td>
+                                  <td>39.7</td>
+                                  
+                                  <td>54.6</td>
+                                  <td>55.4</td>
+                                  <td>52.8</td>
+                                  <td>56944</td>
+                                  <td>17</td>
+                              </tr>
+                              <tr>
+                                  <td>2045</td>
+                                  <td>10890</td>
+                                  <td>0.2</td>
+                                  <td>22</td>
+                                  <td>-8</td>
+                                  <td>40.4</td>
+                                  <td>55.1</td>
+                                  <td>54.9</td>
+                                  <td>56.4</td>
+                                  <td>6141</td>
+                                  <td>17</td>
+                              </tr>
+                              <tr>
+                                  <td>2050</td>
+                                  <td>10960</td>
+                                  <td>0.13</td>
+                                  <td>14</td>
+                                  <td></td>
+                                  <td>41.2</td>
+                                  <td>55.4</td>
+                                  <td>54.6</td>
+                                  <td>60.0</td>
+                                  <td>6571</td>
+                                  <td>17</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                        <h5 class="margin30">Mật độ dân số Việt Nam</h5>
+                        <p>Mật độ dân số của Việt Nam là 290 người/km2, tăng 31 người/km2 so với năm 2009. Việt Nam là quốc gia có mật độ dân số đứng thứ ba trong khu vực Đông Nam Á, sau Phi-li-pin (363 người/km2) và Xin-ga-po (8.292 người/km2) .
+                            Đồng bằng sông Hồng và Đông Nam Bộ là hai vùng có mật độ dân số cao nhất toàn quốc, tương ứng là 1.060 người/km2 và 757 người/km2. Trung du và miền núi phía Bắc và Tây Nguyên là hai vùng có mật độ dân số thấp nhất, tương ứng là 132 người/km2 và 107 người/km2.</p>
+                        <img src="/main/img/pop19_map.jpg" alt="" class="img-density">
+                        <p>Đông Nam Bộ có tỷ lệ dân số thành thị cao nhất cả nước (62,8%), Trung du và miền núi phía Bắc có tỷ lệ dân số thành thị thấp nhất (18,2%). Các tỉnh có tỷ lệ dân số thành thị cao nhất gồm Đà Nẵng, Bình Dương và thành phố Hồ Chí Minh (tương ứng là 87,2%, 79,9%, 79,2%).</p>
+                        <p> Đồng bằng sông Hồng là nơi tập trung dân cư lớn nhất của cả nước với 22,5 triệu người, chiếm 23,4% tổng dân số cả nước. Tây Nguyên là nơi có ít dân cư sinh sống nhất với 5,8 triệu người, chiếm 6,1% dân số cả nước. Giai đoạn 2010 - 2020, Đông Nam Bộ có tỷ lệ tăng dân số bình quân cao nhất cả nước, 2,37%/năm; Đồng bằng sông Cửu Long có tỷ lệ tăng dân số bình quân thấp nhất, 0,05%/năm.</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-2">
+
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+    <div class="margin30 address">
+        <div class="address-item col-md-12 row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <span>Cổng thông tin điện tử Bộ Y tế</span><br>
+                <span>Bản quyền thuộc Bộ Y Tế</span><br>
+                <span>Số điện thoại: 0987654321</span><br>
+                <span>Máy Fax: 0254562456</span>
+            </div>
+            <div class="col-md-4">
+                <span>Email: boyte@gmail.com</span><br>
+                <span>Ghi rõ thông tin Bộ Y Tế khi trích dẫn nội dung</span><br>
+                <span>Liên hệ: 0987654321</span><br>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </div>
+            
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/main/js/chartPopulation.js"></script>
+    <script src="/public/jquery/jquery.min.js"></script>
+    <script src="/main/js/main.js"></script>
+    <script src="/main/js/district.js"></script>
+</body>
+</html>

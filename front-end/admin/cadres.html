@@ -1,0 +1,200 @@
+<style>
+    table span .fa-edit {
+        color: rgb(90, 90, 172)
+    }
+
+    table span {
+        color: black
+    }
+
+    table span:hover {
+        text-decoration: underline;
+        cursor: pointer;
+        color: blue
+    }
+
+    table tr td:nth-child(2):hover {
+        text-decoration: underline;
+    }
+
+    table tr:hover {
+        cursor: pointer;
+        background-color: rgb(228, 220, 220);
+    }
+
+    #show-info-detail {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 100px;
+    }
+
+    .my-custom-scrollbar {
+        position: relative;
+        height: 400px;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }
+</style>
+
+<!-- display personal information -->
+<div class="card shadow mb-1 d-none" id="show-info-detail">
+    <h6 style="padding: 5px 20px" class="text-primary font-weight-bold">Thông tin chi tiết</h6>
+    <div class="card-header py-3">
+
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <div style="display: flex; justify-content: space-between">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách cán bộ</h6>
+            <div>
+                <!-- <button type="button" id="btn-save-edit" class="btn-sm btn-success mr-2"
+                    onclick="save_edit()">Lưu thay đổi</button> -->
+                <button type="button" id="btn-save-edit" class="btn-sm btn-success">Lưu thay đổi</button>
+            </div>
+        </div>
+        <div class="col-12 pl-0 pt-3 flex-column">
+            <select id="province" class="browser-default custom-select w-auto">
+                <option value="" style="display: none">Chọn tỉnh/thành phố</option>
+            </select>
+            <select id="district" class="browser-default custom-select w-auto">
+                <option value="" style="display: none">Chọn quận/huyện</option>
+            </select>
+            <select id="ward" class="browser-default custom-select w-auto">
+                <option value="" style="display: none">Chọn phường/xã</option>
+            </select>
+
+            <form class="d-none d-sm-inline-block form-inline mr-auto my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="text" name="search" id="search" class="form-control border-0 small"
+                        style="background-color: rgb(204, 200, 200);" placeholder="Tìm kiếm theo mã..."
+                        aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" id="btn-search">
+                            Tìm kiếm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mt-3 d-flex">
+            <div>
+                <span>Trang: </span>
+                <select name="pages" id="page-number" class="border border-secondary">
+                    <!-- <option value="1">1</option> -->
+                    <!-- <option value="2">2</option> -->
+                </select>
+            </div>
+            <div class="ml-5">
+                <span>Số lượng hiển thị: </span>
+                <select name="data_tables" id="data_tables" class="border border-secondary">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="500">500</option>
+                </select>
+            </div>
+            <div class="ml-5">
+                <span id="total_area" class="font-weight-bold"></span>
+            </div>
+            <div class="ml-5">
+                <label for="all-permission" class="font-weight-bold">Cấp quyền tất cả: </label>
+                <input type="checkbox" id="all-permission">
+            </div>
+            <div class="ml-5">
+                <label for="all-disable-permission" class="font-weight-bold">Huỷ quyền tất cả: </label>
+                <input type="checkbox" id="all-disable-permission">
+            </div>
+        </div>
+        <div class="card-body p-0 pt-3">
+            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã khu vực</th>
+                            <th>Chức vụ</th>
+                            <th>Tuổi</th>
+                            <th>Khu vực quản lý</th>
+                            <th>Được cấp quyền</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Mã khu vực</th>
+                            <th>Chức vụ</th>
+                            <th>Tuổi</th>
+                            <th>Khu vực quản lý</th>
+                            <th>Được cấp quyền</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <!-- <tr>
+                            <td>1</td>
+                            <td>Lê Văn Hiếu Trung</td>
+                            <td>NULL</td>
+                            <td>Phường/xã</td>
+                            <td>1</td>
+                            <td class="" id="edited">
+                                <span data-toggle="modal" data-target="#myModal">Edit <i
+                                        class="far fw fa-edit"></i></span>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" style="color: black; font-weight: bold;">Sửa thông tin</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="" role="form" data-toggle="validator" style="display: flex; flex-direction: column">
+                    <div style="display: flex; flex-direction: column;">
+                        <div class="form-group">
+                            <label for="permission">Quyền cho phép</label>
+                            <select name="perms" id="permission" class="browser-default custom-select w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                            </select>
+                            <!-- <input type="number" name="permission" id="permission" /> -->
+
+                            <!-- Error -->
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <!-- <span id="form-message" style="display: none">Lưu thay đổi thành công!</span> -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block" id="save-permission"
+                                data-dismiss="modal">Xác nhận</button>
+                        </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./js/cadres/cadres.load-area.js"></script>
+<script src="./js/cadres/cadres.data_temp.js"></script>
+<script src="./js/cadres/cadres.handle-pagination.js"></script>
+<script src="./js/cadres/cadres.handle-select.js"></script>
+<script src="./js/cadres/cadres.save-change.js"></script>
+<script src="./js/cadres/cadres.search.js"></script>

@@ -1,0 +1,28 @@
+#chartCity-admin,
+#chartEthnic-admin,
+#chartSex-admin{
+    width: 500px !important;
+    height: 500px !important;
+    margin: 0 auto;
+}
+.population-country{
+    font-size: 25px;
+    font-weight: 700;
+    color: rgb(49, 49, 49);
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0 auto;
+}
+.populationCountry-detail{
+    color: black;
+    margin-top: 10px;
+}
+.chart-area{
+    height: 25rem !important;
+}
+.population-admin{
+    color: rgb(74, 74, 74);
+    margin-top: 10px;
+}
+.chart-area-height{
+    height: 15rem !important;   
+}

@@ -1,0 +1,41 @@
+<canvas id="chartCity-admin"></canvas>
+<script>
+    var xValues = ["Thành thị", "Nông thôn"];
+    var yValues = ['58.2', '41.8'];
+    var barColors = [
+    "#17a2b8",
+    "#6f42c1"
+
+    ];
+    // Biểu đồ thành thị nông thôn
+    new Chart("chartCity-admin", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Biểu đồ cơ cấu dân số theo tỷ lệ thành thị, nông thôn",
+                position: "bottom",
+                fontSize: 40
+            },
+            legend:{
+                display: true,
+                labels:{
+                    fontSize: 45
+                }
+            },
+            layout:{
+                padding:{
+                    top: 20
+                }      
+            }
+
+        }
+    });
+</script>
